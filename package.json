@@ -1,0 +1,29 @@
+{
+  "name": "createservers",
+  "version": "1.0.0",
+  "main": "dist/bin.js",
+  "type": "module",
+  "bin": {
+    "createservers": "./dist/bin.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "tsc && node dist/bin.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "antorrg-software",
+  "license": "MIT",
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^26.3.0",
+    "typescript": "^7.0.2"
+  }
+}

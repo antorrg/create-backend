@@ -1,0 +1,14 @@
+Listado de archivos:
+
+package.json
+eslint.config.js
+tsconfig.json
+tsconfig.test.json
+tsconfig.eslint.json
+.gitignore
+.env.example
+.env.development
+.env.production
+.env.test
+vitest.config.ts
+envConfig.ts
