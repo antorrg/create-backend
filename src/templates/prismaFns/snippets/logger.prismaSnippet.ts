@@ -1,6 +1,7 @@
 
 
 export const loggerServiceDbPrisma ={
+  importType: '../../../generated/prisma/enums.js',
   file:`import { throwError, processError, ERROR_CODE } from '../errors.js'
 import { prisma } from '../database.js'
 import { LogLevel } from '../../../generated/prisma/enums.js'

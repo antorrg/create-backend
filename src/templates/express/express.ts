@@ -80,8 +80,8 @@ serverBootstrap()`
         {
 path:`/${options.sourceFolderName}/features/system-logs/log.routes.ts`,
 file: `import express from 'express'
-import { loggerServiceDb } from '../../configs/Logger/LoggerServiceDb.js'
-import { LoggerController } from '../../configs/Logger/LoggerController.js'
+import { loggerServiceDb } from '../../configs/logger/LoggerServiceDb.js'
+import { LoggerController } from '../../configs/logger/LoggerController.js'
 import { Validator } from 'req-valid-express'
 import { UuidHandler } from '../../shared/utils/UuidHandler.js'
 import logQuery from './logSchema.js'

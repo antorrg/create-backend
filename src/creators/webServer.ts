@@ -1,21 +1,21 @@
 import { CreatorOptions, prepareProjectDirectory, logSuccessMessage, createProjectFile } from "./common.js";
 import { Colors, promptInput, promptList } from "../cli/cliNative.js";
-import { optionServer, optionAuth  } from "../setups/webServer/options.js";
+import { optionServer, optionAuth  } from "../options.js";
 import * as temp from '../templates/index.templates.js'
 
 
 export async function createWebServer(options: CreatorOptions): Promise<void> {
 
   const selectedServer = await promptList<string>(
-    "Escoja el framework y la persistencia",
+    "Select framework and persistence",
     optionServer
   )
     const selectedAuth = await promptList<string>(
-    "Escoja el tipo de autenticacion",
+    "Select authentication type",
     optionAuth
   )
-  console.log(`\n${Colors.cyan}🚀 Iniciando creación de Servidor Web para '${options.projectName}'...${Colors.reset}`);
-    console.time('ejecucion constructor ')
+  console.log(`\n${Colors.cyan}🚀 Starting Web Server creation for '${options.projectName}'...${Colors.reset}`);
+    console.time('constructor execution ')
   const projectPath = await prepareProjectDirectory(options);
   const finalOptions = {
     ...options,
@@ -23,42 +23,40 @@ export async function createWebServer(options: CreatorOptions): Promise<void> {
     selectedAuth,
     swaggerOption: false
   }
-  console.log('coleccion de opciones hasta ahora: ',finalOptions)
+ // console.log('options collection so far: ',finalOptions)
+  // Specific Web Server creator functions will be invoked here
+  console.log(`[creator:webServer] Running file creators for Web Server...`);
 
-  const serverFilesFramework = finalOptions.selectedServer.endsWith('-pris')
+  const serverFilesOrm = finalOptions.selectedServer.endsWith('-pris')
           ? temp.prismaBase(finalOptions) 
           : temp.sequelizeBase(finalOptions)
   
   const serverFilesServer = temp.baseServer(finalOptions)
   const serverFiles2 = temp.express(finalOptions)
   const serverFilesLogger = temp.loggerTs(finalOptions)
-  const serverFiles4 = temp.baseApp(finalOptions)
+  const serverFilesErrors = temp.errorsTemplate(finalOptions)
+  const serverFilesApp = temp.baseApp(finalOptions)
   const serverFilesAuth = temp.generalBaseAuth(finalOptions)
-  selectedAuth.endsWith('-session')? serverFiles4.push(...serverFilesAuth): null
+  selectedAuth.endsWith('-session')? serverFilesApp.push(...serverFilesAuth): null
 
   const bases = [
-    ...serverFilesFramework,
+    ...serverFilesOrm,
     ...serverFilesServer,
     ...serverFiles2,
-    ...serverFilesLogger, 
-    ...serverFiles4,
+    ...serverFilesLogger,
+    ...serverFilesErrors,
+    ...serverFilesApp,
   ].flat(1)
 
-  // Paralelizar creación de archivos
+  // Parallelize file creation
   await Promise.all(
     bases.map(server => 
       createProjectFile(finalOptions.projectName, server.path, server.file)
     )
   )
-  
-  // Aquí se invocarán las funciones creadoras específicas de Servidor Web
-  console.log(`[creator:webServer] Ejecutando creadores de archivos para Servidor Web...`);
-  
-  // Ejemplo / Stub preparado para integrar la generación específica
-  console.log(`[creator:webServer] TODO: Implementar plantillas específicas de Servidor Web en ${projectPath}`);
-
-  console.timeEnd('ejecucion constructor ')
-  logSuccessMessage(options.projectName, "Servidor Web");
+ 
+  console.timeEnd('constructor execution ')
+  logSuccessMessage(options.projectName, "Web Server");
   process.exit(0)
 }
 /*  const projectType = await promptList<"functionality" | "webServer" | "nextServer" | "electronNode">(

@@ -2,15 +2,15 @@ import { CreatorOptions, prepareProjectDirectory, logSuccessMessage } from "./co
 import { Colors } from "../cli/cliNative.js";
 
 export async function createElectronNode(options: CreatorOptions): Promise<void> {
-  console.log(`\n${Colors.cyan}🚀 Iniciando creación de Backend Node (Electron) para '${options.projectName}'...${Colors.reset}`);
+  console.log(`\n${Colors.cyan}🚀 Starting Node Backend (Electron) creation for '${options.projectName}'...${Colors.reset}`);
   
   const projectPath = await prepareProjectDirectory(options);
   
-  // Aquí se invocarán las funciones creadoras específicas de Backend Node (Electron)
-  console.log(`[creator:electronNode] Ejecutando creadores de archivos para Backend Node (Electron)...`);
+  // Specific Node Backend (Electron) creator functions will be invoked here
+  console.log(`[creator:electronNode] Running file creators for Node Backend (Electron)...`);
   
-  // Ejemplo / Stub preparado para integrar la generación específica
-  console.log(`[creator:electronNode] TODO: Implementar plantillas específicas de Backend Node (Electron) en ${projectPath}`);
+  // Example / Stub prepared to integrate specific generation
+  console.log(`[creator:electronNode] TODO: Implement specific Node Backend (Electron) templates in ${projectPath}`);
 
-  logSuccessMessage(options.projectName, "Backend Node (Electron)");
+  logSuccessMessage(options.projectName, "Node Backend (Electron)");
 }

@@ -39,7 +39,7 @@ export async function promptInput(
         if (options?.validate) {
           const valid = options.validate(value);
           if (valid !== true) {
-            console.log(`${Colors.red}>> ${typeof valid === "string" ? valid : "Entrada no válida"}${Colors.reset}`);
+            console.log(`${Colors.red}>> ${typeof valid === "string" ? valid : "Invalid input"}${Colors.reset}`);
             ask();
             return;
           }
@@ -135,7 +135,7 @@ export async function promptList<T>(
         resolve(selected.value);
       } else if (key.ctrl && key.name === "c") {
         cleanup(onKeyPress);
-        console.log(`\n${Colors.yellow}Operación cancelada por el usuario.${Colors.reset}`);
+        console.log(`\n${Colors.yellow}Operation cancelled by user.${Colors.reset}`);
         process.exit(0);
       }
     };

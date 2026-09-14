@@ -1,7 +1,7 @@
 
 export const appSnippet = {
     import:`import cookieParser from 'cookie-parser'
-import { sessionMiddleware } from './shared/auth/Session.js'
+import { sessionMiddleware } from './shared/auth/session.js'
 import * as auth from './shared/auth/authMiddlewares.js'`,
     line: `app.use(cookieParser())
 app.use(sessionMiddleware)

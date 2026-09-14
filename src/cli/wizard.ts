@@ -10,53 +10,54 @@ import {
 export async function runCli(): Promise<void> {
   console.log("");
   console.log(`${Colors.bold}${Colors.cyan}=============================================${Colors.reset}`);
-  console.log(`${Colors.bold}${Colors.green}          🚀 CreateServers CLI 🚀            ${Colors.reset}`);
+  console.log(`${Colors.bold}${Colors.green}          🚀 CreateBackend CLI 🚀            ${Colors.reset}`);
   console.log(`${Colors.bold}${Colors.cyan}=============================================${Colors.reset}`);
-  console.log(`${Colors.dim}Generador de proyectos y servidores nativo en Node.js${Colors.reset}\n`);
+  console.log(`${Colors.dim}Native Node.js project and server generator${Colors.reset}\n`);
 
  
 
-  // 2. Pregunta por el tipo de proyecto (equivalente a createServer.sh)
+  // 2. Ask for the project type (equivalent to createServer.sh)
   const projectType = await promptList< "webServer" | "nextServer" | "electronNode">(
-    "¿Qué necesita crear?",
+    "What do you need to create?",
     [
-      { name: "1) Servidor web", value: "webServer" },
-      { name: "2) Servidor next.js", value: "nextServer" },
-      { name: "3) Backend node (electron)", value: "electronNode" },
+      { name: "1) Web server", value: "webServer" },
+      { name: "2) Next.js server", value: "nextServer" },
+      { name: "3) Node backend (Electron)", value: "electronNode" },
     ]
   );
-   // 1. Pregunta por el nombre del proyecto
-  const project_name = await promptInput("¿Nombre del proyecto o carpeta?", {
+   // 1. Ask for the project name
+  const project_name = await promptInput("Project or folder name?", {
     default: "my-server",
     validate: (input) => {
-      if (!input.trim()) return "El nombre no puede estar vacío";
+      if (!input.trim()) return "Name cannot be empty";
       if (!/^[a-zA-Z0-9_.-]+$/.test(input.trim())) {
-        return "El nombre solo puede contener letras, números, guiones y puntos";
+        return "Name can only contain letters, numbers, hyphens, and dots";
       }
       return true;
     },
   });
-    const sourceFolderName = await promptInput("¿Nombre de la carpeta principal?", {
+    const sourceFolderName = await promptInput("Main folder name?", {
     default: (projectType === 'nextServer')? "api" : "src",
     validate: (input) => {
-      if (!input.trim()) return "El nombre no puede estar vacío";
+      if (!input.trim()) return "Name cannot be empty";
       if (!/^[a-zA-Z0-9_.-]+$/.test(input.trim())) {
-        return "El nombre solo puede contener letras, números, guiones y puntos";
+        return "Name can only contain letters, numbers, hyphens, and dots";
       }
       return true;
     },
   });
 
-  // 3. Obtener el directorio objetivo donde se invoca la CLI
+  // 3. Get target directory where CLI is invoked
   const targetDir = process.cwd();
 
   const options: CreatorOptions = {
+    projectType,
     projectName: normalizePackageName(project_name),
     sourceFolderName,
     targetDir,
   };
 
-  // 4. Ejecutar el creador correspondiente según la opción seleccionada
+  // 4. Execute corresponding creator based on selected option
   switch (projectType) {
 
     case "webServer":
@@ -72,7 +73,7 @@ export async function runCli(): Promise<void> {
       break;
 
     default:
-      console.log(`${Colors.yellow}Opción no reconocida, usando Servidor web por defecto...${Colors.reset}`);
+      console.log(`${Colors.yellow}Unrecognized option, using default Web server...${Colors.reset}`);
       await createWebServer(options);
       break;
   }
@@ -86,4 +87,7 @@ function normalizePackageName(name:string):string {
     .replace(/\s+/g, '-')
     .replace(/[^a-z0-9-_]/g, '')
     .replace(/^-+|-+$/g, '')
+}
+export {
+
 }

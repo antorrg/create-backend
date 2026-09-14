@@ -2,15 +2,15 @@ import { CreatorOptions, prepareProjectDirectory, logSuccessMessage } from "./co
 import { Colors } from "../cli/cliNative.js";
 
 export async function createFunctionality(options: CreatorOptions): Promise<void> {
-  console.log(`\n${Colors.cyan}🚀 Iniciando creación de Funcionalidad para '${options.projectName}'...${Colors.reset}`);
+  console.log(`\n${Colors.cyan}🚀 Starting Functionality creation for '${options.projectName}'...${Colors.reset}`);
   
   const projectPath = await prepareProjectDirectory(options);
   
-  // Aquí se invocarán las funciones creadoras específicas
-  console.log(`[creator:functionality] Ejecutando creadores de archivos para la funcionalidad...`);
+  // Specific creator functions will be invoked here
+  console.log(`[creator:functionality] Running file creators for functionality...`);
   
-  // Ejemplo / Stub preparado para integrar la generación específica
-  console.log(`[creator:functionality] TODO: Implementar plantillas específicas de Funcionalidad en ${projectPath}`);
+  // Example / Stub prepared to integrate specific generation
+  console.log(`[creator:functionality] TODO: Implement specific Functionality templates in ${projectPath}`);
 
-  logSuccessMessage(options.projectName, "Funcionalidad");
+  logSuccessMessage(options.projectName, "Functionality");
 }

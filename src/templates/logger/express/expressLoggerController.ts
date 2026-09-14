@@ -1,5 +1,6 @@
 
 export const expressLoggerController = {
+subPath:`LoggerController.ts`,
 file: `import { type Request, type Response } from 'express'
 import { type LoggerServiceDb } from './LoggerServiceDb.js'
 

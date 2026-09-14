@@ -6,7 +6,7 @@ export const generalBaseAuth = (options: FilePattern)=>{
   const sessionServer = authSessionExpress(options)
     return [
         {
-        path:`/${options.sourceFolderName}/shared/auth/CSFR.ts`,
+        path:`/${options.sourceFolderName}/shared/auth/CSRF.ts`,
         file: `import crypto from 'crypto'
 
 function randomAlphanumeric(length: number): string {
@@ -23,8 +23,8 @@ function hash(str: string): string {
   return crypto.createHash('sha1')
     .update(str, 'ascii')
     .digest('base64')
-    .replace(/\+/g, '-')
-    .replace(/\//g, '_')
+    .replace(/\\+/g, '-')
+    .replace(/\\//g, '_')
     .replace(/=/g, '')
 }
 
@@ -61,14 +61,15 @@ export class CSRF {
 
   async secret(): Promise<string> {
     const buf = await crypto.randomBytes(this.#secretLength)
-    return buf.toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '')
+    return buf.toString('base64').replace(/\\+/g, '-').replace(/\\//g, '_').replace(/=/g, '')
   }
+
 
   secretSync(): string {
     return crypto.randomBytes(this.#secretLength)
       .toString('base64')
-      .replace(/\+/g, '-')
-      .replace(/\//g, '_')
+      .replace(/\\+/g, '-')
+      .replace(/\\//g, '_')
       .replace(/=/g, '')
   }
 

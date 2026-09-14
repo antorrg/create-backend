@@ -1,4 +1,5 @@
 export const loggerServiceDbSequelize ={
+  importType:'../../models/log.model.js',
   file:`import { throwError, processError, ERROR_CODE } from '../errors.js'
 import { Op } from '@sequelize/core'
 import { LogLevel, Log } from '../../models/log.model.js'
@@ -110,12 +111,7 @@ export class LoggerServiceDb implements ILoggerService<ILogger, LoggerUpdate> {
    */
   async create (data: LoggerCreate): Promise<ILogger> {
     try {
-      const record = await this.Model.create({
-        pid: process.pid,
-        time: Date.now(),
-        ...data,
-        id: data.id ?? UuidHandler.createUuid()
-      })
+      const record = await this.Model.create(data)
       return this.parserFn(record)
     } catch (error) {
       return processError(error, 'Log create')

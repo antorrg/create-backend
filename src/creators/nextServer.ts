@@ -2,15 +2,15 @@ import { CreatorOptions, prepareProjectDirectory, logSuccessMessage } from "./co
 import { Colors } from "../cli/cliNative.js";
 
 export async function createNextServer(options: CreatorOptions): Promise<void> {
-  console.log(`\n${Colors.cyan}🚀 Iniciando creación de Servidor Next.js para '${options.projectName}'...${Colors.reset}`);
+  console.log(`\n${Colors.cyan}🚀 Starting Next.js Server creation for '${options.projectName}'...${Colors.reset}`);
   
   const projectPath = await prepareProjectDirectory(options);
   
-  // Aquí se invocarán las funciones creadoras específicas de Next.js
-  console.log(`[creator:nextServer] Ejecutando creadores de archivos para Servidor Next.js...`);
+  // Specific Next.js creator functions will be invoked here
+  console.log(`[creator:nextServer] Running file creators for Next.js Server...`);
   
-  // Ejemplo / Stub preparado para integrar la generación específica
-  console.log(`[creator:nextServer] TODO: Implementar plantillas específicas de Servidor Next.js en ${projectPath}`);
+  // Example / Stub prepared to integrate specific generation
+  console.log(`[creator:nextServer] TODO: Implement specific Next.js Server templates in ${projectPath}`);
 
-  logSuccessMessage(options.projectName, "Servidor Next.js");
+  logSuccessMessage(options.projectName, "Next.js Server");
 }

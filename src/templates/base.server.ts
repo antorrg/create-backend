@@ -3,6 +3,7 @@ import { getFramDependencies } from "./helpers/getFrameworsSnippets.js"
 import type { FilePattern } from "../types.js"
 import { dbSnippet } from "./baseSnippets/dbSnippet.js"
 import { authDependencies } from "./auth/auth.snippets.js"
+import { selectOrmForInitDb, testOrms } from "./helpers/selectOrmForInitDb.js"
 
 
 
@@ -10,6 +11,8 @@ export const baseServer = (options:FilePattern)=>{
   const deps = getOrmDependencies(options.selectedServer)
   const framework = getFramDependencies(options.selectedServer)
   const databases = dbSnippet(options.selectedServer)
+  const initDb = selectOrmForInitDb(options)
+  const tests = testOrms(options)
     return[
 
         {
@@ -367,6 +370,41 @@ const envConfig = {
 }
 export default envConfig
   `
+},
+{
+   path: `/${options.sourceFolderName}/configs/EnvDb.test.ts`,
+ file: `
+import { describe, it, expect, beforeAll, afterAll } from 'vitest'
+import envConfig from './envConfig.js'
+import * as db from './database.js'
+
+
+describe('EnvDb test', () => { 
+  beforeAll(async() => {
+  ${initDb}
+  })
+  afterAll(async() => {
+    await db.closeDatabase()
+  })
+  describe('Environment variables', () => {
+    it('should return the correct environment status and database variable', () => { 
+      const formatEnvInfo = \`App running in: \${envConfig.Status}\`+
+      \`Testing database: \${nameOfDb(envConfig.DatabaseUrl)}\`
+      expect(formatEnvInfo).toBe(
+        'App running in: test'+
+        'Testing database: vgametest'
+      )
+    })
+  })
+${tests}
+})
+
+function nameOfDb(url:string): string {
+  if (!url) return 'unknown'
+  const parts = url.split('/')
+  return parts[parts.length - 1] || 'unknown'
+}
+ `
 },
 
     ]

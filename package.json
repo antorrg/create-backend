@@ -1,10 +1,10 @@
 {
-  "name": "createservers",
-  "version": "1.0.0",
+  "name": "createbackend",
+  "version": "0.0.1",
   "main": "dist/bin.js",
   "type": "module",
   "bin": {
-    "createservers": "./dist/bin.js"
+    "createbackend": "./dist/bin.js"
   },
   "files": [
     "dist"

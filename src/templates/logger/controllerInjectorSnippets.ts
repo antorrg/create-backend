@@ -1,4 +1,4 @@
-import { expressLoggerController } from "../express/snippets/expressLoggerController.js"
+import { expressLoggerController } from "./express/expressLoggerController.js"
 
 export function controllerInjectorSnippets(selectedServer: string) {
   if (selectedServer.startsWith('ex-')) return expressLoggerController

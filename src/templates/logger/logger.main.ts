@@ -5,6 +5,7 @@ import { controllerInjectorSnippets } from "./controllerInjectorSnippets.js"
 export const loggerTs = (options:FilePattern)=>{
   const serviceDb = ormInjectorLog(options.selectedServer)
   const controllerLog = controllerInjectorSnippets(options.selectedServer)
+
     return[
 
 {
@@ -127,11 +128,12 @@ export function dbWritableStream(): Writable {
 },
 {
 
-path: `${options.sourceFolderName}/configs/logger/Logger.interfaces.ts`,
+path: `/${options.sourceFolderName}/configs/logger/Logger.interfaces.ts`,
 file: `
+import type { LogLevel } from ${serviceDb.importType}
 export interface ILogger {
   id: string
-  levelName: string
+  levelName: LogLevel | string
   levelCode: number
   message: string
   type?: string | null
@@ -147,7 +149,7 @@ export interface ILogger {
 }
 
 export interface LoggerCreate {
-  levelName: string
+  levelName: LogLevel
   levelCode: number
   message: string
   type?: string
@@ -208,7 +210,7 @@ export interface ILoggerService<TLog, TLogUpdate> {
    file:`${serviceDb.file}`
 },
         {
-path:`/${options.sourceFolderName}/configs/logger/LoggerController.ts`,
+path:`/${options.sourceFolderName}/configs/logger/${controllerLog.subPath}`,
 file: `${controllerLog.file}`
         }
 ]

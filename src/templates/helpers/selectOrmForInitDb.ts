@@ -1,4 +1,4 @@
-import type  {FilePattern } from '../types.js'
+import type  {FilePattern } from '../../types.js'
 
 export const selectOrmForInitDb = (options:FilePattern)=>{
     if(options.selectedServer.endsWith('-seq'))return 'await db.startUp(true, true)'

@@ -1,6 +1,6 @@
 import type { FilePattern } from "../../types.js"
 import { sessionDbSnippets } from "../auth/sessionDbSnnipet.js"
-import { selectOrmForInitDb } from '../selectOrmForInitDb.js'
+import { selectOrmForInitDb } from '../helpers/selectOrmForInitDb.js'
 
 
 export const authSessionExpress = (options: FilePattern)=>{
@@ -309,7 +309,7 @@ export class Auth {
 },
 {
     path:`/${options.sourceFolderName}/shared/auth/testHelpers/serverTest.help.ts`,
-    file: `import express from 'express'
+    file: `import express, {type Request, type Response, } from 'express'
 import { sessionMiddleware } from '../session.js'
 import { csrfProtection, setCsrfToken, verifyCsrfToken, isAuthenticated, authorize, UserRole, Auth } from '../authMiddlewares.js'
 import cookieParser from 'cookie-parser'
@@ -323,30 +323,29 @@ app.use(csrfProtection)   // inicializa req.session.csrfSecret
 app.use(setCsrfToken)     // escribe cookie XSRF-TOKEN
 app.use(verifyCsrfToken)  // bloquea mutantes sin token válido
 
-app.post('/login', (req, res) => {
+app.post('/login', async(req: Request, res: Response) => {
   const { user } = req.body
-  Auth.login(req, user)
+  await Auth.login(req, user)
   res.status(200).json({ success: true, message: 'Logged in' })
 })
 
-app.post('/logout', async(req, res) => {
+app.post('/logout', async(req: Request, res: Response) => {
   await Auth.logout(req)
   res.status(200).json({ success: true, message: 'Logged out' })
 })
 
-app.get('/csrf', (req, res) => {
+app.get('/csrf', (req: Request, res: Response) => {
   res.status(200).json({ success: true, message: 'CSRF token set' })
 })
 
-app.get('/protected', isAuthenticated, (req, res) => {
+app.get('/protected', isAuthenticated, (req: Request, res: Response) => {
   res.status(200).json({ success: true, message: 'Passed middleware', user: req.session.user })
 })
 
-app.get('/admin', authorize(UserRole.ADMIN), (req, res) => {
+app.get('/admin', authorize(UserRole.ADMIN), (req: Request, res: Response) => {
   res.status(200).json({ success: true, message: 'Passed middleware' })
 })
 
-// Debe ir al final, igual que en app.ts
 app.use(errorHandler)
 
 export default app`
