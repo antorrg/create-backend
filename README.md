@@ -121,4 +121,4 @@ This project is licensed under the [MIT License](LICENSE).
 
 ---
 
-Made [antorrg-software](https://github.com/antorrg).
+Made by [antorrg-software](https://github.com/antorrg).
