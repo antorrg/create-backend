@@ -118,6 +118,7 @@ If you want to contribute to `createbackend` or test changes locally:
 ## 📄 License
 
 This project is licensed under the [MIT License](LICENSE).
+MIT © 2026 - antorrg
 
 ---
 

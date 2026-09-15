@@ -1,13 +1,15 @@
+export type Value = {framework:string, persistence:string}
+export type OptionServer = {name: string, value: Value}
 
-export const optionServer = [
-      { name: "1) Express ts without db", value: "ex-single" },
-      { name: "2) Express ts with sequelize (postgres)", value: "ex-seq" },
-      { name: "3) Express ts with prisma (postgres)", value: "ex-pris" },
-      { name: "4) Express ts with mongoose (mongoDb)", value: "ex-mg" },
-      { name: "5) Fastify ts without db", value: "fast-single" },
-      { name: "6) Fastify ts with sequelize (postgres)", value: "fast-seq" },
-      { name: "7) Fastiv ts with prisma (postgres)", value: "fast-pris" },
-      { name: "8) Fastify ts with mongoose (mongoDb)", value: "fast-mg" },
+export const optionServer:OptionServer[] = [
+      { name: "1) Express ts without db", value: {framework:"express",persistence: "none"} },
+      { name: "2) Express ts with sequelize (postgres)", value: {framework:"express",persistence:"sequelize"} },
+      { name: "3) Express ts with prisma (postgres)", value: {framework:"express",persistence:"prisma"} },
+      { name: "4) Express ts with mongoose (mongoDb)", value: {framework:"express",persistence:"mongooose"} },
+      { name: "5) Fastify ts without db", value: {framework:"fastify",persistence:"none"} },
+      { name: "6) Fastify ts with sequelize (postgres)", value: {framework:"fastify",persistence:"sequelize"} },
+      { name: "7) Fastiv ts with prisma (postgres)", value: {framework:"fastify",persistence:"prisma"} },
+      { name: "8) Fastify ts with mongoose (mongoDb)", value: {framework:"fastify",persistence:"mongoose"} },
     ]
     export const optionAuth = [
       { name: "1) None", value: "auth-null" },

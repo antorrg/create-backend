@@ -79,23 +79,22 @@ export async function promptConfirm(
   });
 }
 
-export async function promptList<T>(
-  message: string,
-  choices: { name: string; value: T }[] | T[]
-): Promise<T> {
-  const parsedChoices = choices.map((c) =>
-    typeof c === "object" && c !== null && "value" in c
-      ? (c as { name: string; value: T })
-      : { name: String(c), value: c as T }
-  );
+export interface ListChoice<T> {
+  name: string;
+  value: T;
+}
 
+function renderListMenu<T>(
+  message: string,
+  choices: ListChoice<T>[]
+): Promise<T> {
   return new Promise((resolve) => {
     let selectedIndex = 0;
     const cleanup = setupRawMode();
 
     const render = () => {
       let output = `${Colors.green}?${Colors.reset} ${Colors.bold}${message}${Colors.reset}\n`;
-      parsedChoices.forEach((choice, index) => {
+      choices.forEach((choice, index) => {
         if (index === selectedIndex) {
           output += `${Colors.cyan}❯ ${choice.name}${Colors.reset}\n`;
         } else {
@@ -106,7 +105,7 @@ export async function promptList<T>(
     };
 
     const clear = () => {
-      const lines = parsedChoices.length + 1;
+      const lines = choices.length + 1;
       process.stdout.write(Cursor.up(lines));
       for (let i = 0; i < lines; i++) {
         process.stdout.write(Cursor.clearLine + "\n");
@@ -119,16 +118,16 @@ export async function promptList<T>(
 
       if (key.name === "up") {
         clear();
-        selectedIndex = (selectedIndex - 1 + parsedChoices.length) % parsedChoices.length;
+        selectedIndex = (selectedIndex - 1 + choices.length) % choices.length;
         render();
       } else if (key.name === "down") {
         clear();
-        selectedIndex = (selectedIndex + 1) % parsedChoices.length;
+        selectedIndex = (selectedIndex + 1) % choices.length;
         render();
       } else if (key.name === "return") {
         clear();
         cleanup(onKeyPress);
-        const selected = parsedChoices[selectedIndex];
+        const selected = choices[selectedIndex];
         console.log(
           `${Colors.green}?${Colors.reset} ${Colors.bold}${message}${Colors.reset} ${Colors.cyan}${selected.name}${Colors.reset}`
         );
@@ -144,6 +143,37 @@ export async function promptList<T>(
     render();
     process.stdin.on("keypress", onKeyPress);
   });
+}
+
+export async function promptList<T>(
+  message: string,
+  choices: { name: string; value: T }[] | T[]
+): Promise<T> {
+  const parsedChoices: ListChoice<T>[] = choices.map((c) =>
+    typeof c === "object" && c !== null && "value" in c
+      ? (c as { name: string; value: T })
+      : { name: String(c), value: c as T }
+  );
+
+  return renderListMenu(message, parsedChoices);
+}
+
+export async function promptListObject<T extends Record<string, any>>(
+  message: string,
+  choices: { name: string; value: T }[] | (T & { name?: string })[]
+): Promise<T> {
+  const parsedChoices: ListChoice<T>[] = choices.map((c) => {
+    if (typeof c === "object" && c !== null) {
+      if ("value" in c && "name" in c) {
+        return c as { name: string; value: T };
+      }
+      const name = "name" in c && typeof c.name === "string" ? c.name : JSON.stringify(c);
+      return { name, value: c as T };
+    }
+    return { name: String(c), value: c as T };
+  });
+
+  return renderListMenu(message, parsedChoices);
 }
 
 function setupRawMode() {

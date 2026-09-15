@@ -27,7 +27,7 @@ file: `{
     "test": "test"
   },
   "scripts": {
-  "dev": "cross-env NODE_ENV=development tsx watch index.ts",
+  "dev": "cross-env NODE_ENV=development tsx watch ${options.sourceFolderName}/index.ts",
   "build": "tsc",
   "start": "cross-env NODE_ENV=production node dist/index.js",
   "lint": "eslint .",
@@ -44,7 +44,6 @@ file: `{
     "cross-env": "^10.1.0",
     "dotenv": "^17.4.2",
     ${framework.deps}
-    "morgan": "^1.12.0",
     "pino": "^10.3.1",
     "pino-pretty": "^13.1.3",
     "uuid": "^14.0.2"${(options.selectedAuth !== 'auth-null')?authDependencies.dep: ''}
@@ -54,7 +53,6 @@ file: `{
     "@types/bcrypt": "^6.0.0",
     "@types/cors": "^2.8.19",
     ${framework.devDeps}
-    "@types/morgan": "^1.9.10",
     "@types/node": "^26.4.0",
     "@types/supertest": "^7.2.1",
     "eslint": "^10.9.1",

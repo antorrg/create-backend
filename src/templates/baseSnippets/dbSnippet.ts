@@ -1,8 +1,8 @@
 
-export function dbSnippet(selectedServer: string){
-      if (selectedServer.endsWith('-pris')) return postgresLines
-      if(selectedServer.endsWith('-seq'))  return postgresLines
-        if (selectedServer.endsWith('-single')) return singleLines
+export function dbSnippet(selectedOrm: string){
+      if (selectedOrm === 'prisma') return postgresLines
+      if(selectedOrm === 'sequelize')  return postgresLines
+        if (selectedOrm === 'none') return singleLines
     return postgresLines
 }
 /*export function controllerInjectorSnippets(selectedServer: string) {

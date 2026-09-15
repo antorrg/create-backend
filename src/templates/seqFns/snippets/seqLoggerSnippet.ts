@@ -1,5 +1,5 @@
 export const loggerServiceDbSequelize ={
-  importType:'../../models/log.model.js',
+  importType:`'../../models/log.model.js'`,
   file:`import { throwError, processError, ERROR_CODE } from '../errors.js'
 import { Op } from '@sequelize/core'
 import { LogLevel, Log } from '../../models/log.model.js'

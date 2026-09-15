@@ -1,8 +1,8 @@
 import type  {FilePattern } from '../../types.js'
 
 export const selectOrmForInitDb = (options:FilePattern)=>{
-    if(options.selectedServer.endsWith('-seq'))return 'await db.startUp(true, true)'
-    if (options.selectedServer.endsWith('-pris'))return 'await db.startUp(true)'
+    if(options.selectedOrm === 'sequelize')return 'await db.startUp(true, true)'
+    if (options.selectedOrm === 'prisma')return 'await db.startUp(true)'
     return 'await db.startUp(true)'
 }
 
@@ -36,7 +36,7 @@ export const testOrms = (options:FilePattern)=>{
     })
   })
     `}
-      if(options.selectedServer.endsWith('-seq'))return testCode.seq
-    if (options.selectedServer.endsWith('-pris'))return testCode.pris
+      if(options.selectedOrm === 'sequelize')return testCode.seq
+    if (options.selectedOrm === 'prisma')return testCode.pris
     return testCode.seq
 }

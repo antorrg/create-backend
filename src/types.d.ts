@@ -4,6 +4,7 @@ export type FilePattern = {
   sourceFolderName: string
   targetDir: string
   selectedServer: string
+  selectedOrm:string
   selectedAuth: string,
   swaggerOption: boolean
 }

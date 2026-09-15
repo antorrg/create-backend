@@ -1,6 +1,6 @@
-import type { FilePattern } from "../../types.js"
-import { sessionDbSnippets } from "../auth/sessionDbSnnipet.js"
-import { selectOrmForInitDb } from '../helpers/selectOrmForInitDb.js'
+import type { FilePattern } from "../../../types.js"
+import { sessionDbSnippets } from "../../auth/sessionDbSnnipet.js"
+import { selectOrmForInitDb } from '../../helpers/selectOrmForInitDb.js'
 
 
 export const authSessionExpress = (options: FilePattern)=>{

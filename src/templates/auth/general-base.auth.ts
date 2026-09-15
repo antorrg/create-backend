@@ -1,5 +1,5 @@
 import type { FilePattern } from "../../types.js"
-import { authSessionExpress } from '../express/auth.session.express.js'
+import { authSessionExpress } from '../servers/express/auth.session.express.js'
 
 
 export const generalBaseAuth = (options: FilePattern)=>{
