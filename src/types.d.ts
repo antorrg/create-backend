@@ -3,8 +3,19 @@ export type FilePattern = {
   projectName: string
   sourceFolderName: string
   targetDir: string
-  selectedServer: string
-  selectedOrm:string
+  selectedServer: ServerFramework
+  selectedOrm: AppOrm
   selectedAuth: string,
   swaggerOption: boolean
+}
+export type ProjectType =  "webServer" | "nextServer" | "electronNode"
+export type ServerFramework = 'express' | 'fastify'
+export type AppOrm = 'none'|'sequelize'| 'prisma'| 'mongoose'
+export type FileConstructor = {
+  path: string
+  file: string
+}
+export type FileInjector = {
+  subPath: string
+  file: string
 }

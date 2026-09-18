@@ -1,9 +1,9 @@
 import type { FilePattern } from "../../types.js"
-import { authSessionExpress } from '../servers/express/auth.session.express.js'
+import { sessionFrameworkSnippet } from "./session.framework.snippet.js"
 
 
 export const generalBaseAuth = (options: FilePattern)=>{
-  const sessionServer = authSessionExpress(options)
+  const sessionServer = sessionFrameworkSnippet(options)
     return [
         {
         path:`/${options.sourceFolderName}/shared/auth/CSRF.ts`,

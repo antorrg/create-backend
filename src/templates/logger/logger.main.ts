@@ -4,8 +4,8 @@ import { ormInjectorLog } from "./ormInjector.js"
 import { controllerInjectorSnippets } from "./controllerInjectorSnippets.js"
 
 export const loggerTs = (options:FilePattern)=>{
-  const serviceDb = ormInjectorLog(options.selectedOrm)
-  const controllerLog = controllerInjectorSnippets(options.selectedServer)
+  const serviceDb = ormInjectorLog(options)
+  const controllerLog = controllerInjectorSnippets(options)
 
     return[
 

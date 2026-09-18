@@ -1,9 +1,9 @@
 import type { FilePattern } from "../../../types.js"
-import { appSnippet, authDependencies } from "../../auth/auth.snippets.js"
+import { expressaAuthSnippet , expressAuthDependencies } from "./snippets/auth.snippets.js"
 import * as dep from './common/index.js'
 
 export const express = (options:FilePattern)=>{
-    return[
+ const files =[
 
 {
     //Crear el archivo app.ts en src
@@ -14,7 +14,7 @@ import cors from 'cors'
 import * as eh from './configs/errors.js'
 import mainRouter from './routes.js'
 import envConfig from './configs/envConfig.js'
-${(options.selectedAuth !== 'auth-null')?appSnippet.import : ''}
+${(options.selectedAuth !== 'auth-null')?expressaAuthSnippet.import : ''}
 
 
 const app = express()
@@ -36,7 +36,7 @@ if (envConfig.Status === 'development') {
 
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs, swaggerUiOptions))
 }\n`: ''}
-${(options.selectedAuth !== 'auth-null')?appSnippet.line : ''}
+${(options.selectedAuth !== 'auth-null')?expressaAuthSnippet.line : ''}
 app.use(mainRouter)
 app.use(eh.notFoundRoute)
 app.use(eh.errorHandler)
@@ -62,12 +62,12 @@ export default mainRouter
 },
 {
 path:`/${options.sourceFolderName}/index.ts`,
-file:`import app from './app.js'${options.selectedServer !== 'ex-single'?`\nimport { startUp } from './configs/database.js'`:''}
+file:`import app from './app.js'${options.selectedOrm !== 'none'?`\nimport { startUp } from './configs/database.js'`:''}
 import envConfig from './configs/envConfig.js'
 
 const message =\`Server is listening on port \${envConfig.Port}\\nServer in \${envConfig.Status}\\n 🚀​ Everything is allright!!\`
 async function serverBootstrap(){
-    try{${options.selectedServer !== 'ex-single'?`\n      await startUp()`:''}
+    try{${options.selectedOrm !== 'none'?`\n      await startUp()`:''}
         app.listen(envConfig.Port,() => {
         console.log(message)
             })
@@ -112,4 +112,5 @@ export function responder(
 }
 
 ]
+return files 
 }

@@ -1,5 +1,5 @@
 
-export const appSnippet = {
+export const expressaAuthSnippet = {
     import:`import cookieParser from 'cookie-parser'
 import { sessionMiddleware } from './shared/auth/session.js'
 import * as auth from './shared/auth/authMiddlewares.js'`,
@@ -10,7 +10,7 @@ app.use(auth.setCsrfToken)
 app.use(auth.verifyCsrfToken)`
 }
 
-export const authDependencies = {
+export const expressAuthDependencies = {
     dep: `,
     "cookie-parser": "^1.4.7",
     "express-session": "^1.19.0"`,

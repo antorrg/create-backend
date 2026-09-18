@@ -1,22 +1,23 @@
-import * as exHand from './express/expressErrorHandler.snippet.js'
-//import { fastifyErrorHandlerSnippet } from './fastify/fastify.snippet.js'
+import {FilePattern } from '../../types.js'
+import * as exHand from '../servers/express/snippets/expressErrorHandler.snippet.js'
+import * as fastHand from '../servers/fastify/snippets/fastifyErrorHandler.snippet.js'
 
 
-export function getErrorHandlerSnippet(selectedServer: string) {
-  if (selectedServer.startsWith('ex-')) return exHand.expressErrorHandlerSnippet
-  //if (selectedServer.startsWith('fast-')) return fastifyErrorHandlerSnippet
-  // futuro: next, electron
-  return exHand.expressErrorHandlerSnippet
-}
-export function getErrorHandlerTestSnippet(selectedServer: string) {
-  if (selectedServer.startsWith('ex-')) return exHand.expressErrorHandlerTestSnippet
-  //if (selectedServer.startsWith('fast-')) return fastifyErrorHandlerSnippet
-  // futuro: next, electron
-  return exHand.expressErrorHandlerTestSnippet
-}
-export function getErrorExportsSnippet(selectedServer: string) {
-  if (selectedServer.startsWith('ex-')) return exHand.expressErrorExportsSnippet
-  //if (selectedServer.startsWith('fast-')) return fastifyErrorHandlerSnippet
-  // futuro: next, electron
-  return exHand.expressErrorExportsSnippet
+export function getErrorHandlerSnippets(options:FilePattern){
+   switch(options.selectedServer){
+    case 'express':
+      return {
+        error:exHand.expressErrorHandlerSnippet,
+        errorTest: exHand.expressErrorHandlerTestSnippet,
+        exports: exHand.expressErrorExportsSnippet
+      }
+    case 'fastify':
+      return {
+        error:fastHand.fastifyErrorHandlerSnippet,
+        errorTest:fastHand.fastifyErrorHandlerTestSnippet,
+        exports: fastHand.fastifyErrorExportsSnippet
+      }
+    default: 
+      throw new Error(`This framework ${options.selectedServer} is not implemented yet`)
+  }
 }

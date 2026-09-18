@@ -1,19 +1,17 @@
-import { getOrmDependencies } from "./helpers/getOrmsSnippets.js"
-import { getFramDependencies } from "./helpers/getFrameworsSnippets.js"
-import type { FilePattern } from "../types.js"
-import { dbSnippet } from "./baseSnippets/dbSnippet.js"
-import { authDependencies } from "./auth/auth.snippets.js"
-import { selectOrmForInitDb, testOrms } from "./helpers/selectOrmForInitDb.js"
+import type { FilePattern } from "../../types.js"
+import { generalBaseAuth } from "../auth/general-base.auth.js"
+import { ormDependencies } from "../baseSnippets/ormDependencies.js"
+import { getFramDependencies } from "../helpers/getFrameworsSnippets.js"
+import { expressAuthDependencies } from "./express/snippets/auth.snippets.js"
+import { frameworkInjector } from "./frameworkInjector.js"
 
 
 
 export const baseServer = (options:FilePattern)=>{
-  const deps = getOrmDependencies(options.selectedServer)
+  const {deps, databases, initDb, tests } = ormDependencies(options)
   const framework = getFramDependencies(options.selectedServer)
-  const databases = dbSnippet(options.selectedServer)
-  const initDb = selectOrmForInitDb(options)
-  const tests = testOrms(options)
-    return[
+  const server = frameworkInjector(options)
+    const serverFiles = [
 
         {
 //package.json
@@ -40,18 +38,16 @@ file: `{
   "dependencies": {
     ${deps.deps}
     "bcrypt": "^6.0.0",
-    "cors": "^2.8.6",
     "cross-env": "^10.1.0",
     "dotenv": "^17.4.2",
     ${framework.deps}
     "pino": "^10.3.1",
     "pino-pretty": "^13.1.3",
-    "uuid": "^14.0.2"${(options.selectedAuth !== 'auth-null')?authDependencies.dep: ''}
+    "uuid": "^14.0.2"${(options.selectedAuth !== 'auth-null')?expressAuthDependencies.dep: ''}
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@types/bcrypt": "^6.0.0",
-    "@types/cors": "^2.8.19",
     ${framework.devDeps}
     "@types/node": "^26.4.0",
     "@types/supertest": "^7.2.1",
@@ -62,7 +58,7 @@ file: `{
     "supertest": "^7.2.2",
     "typescript": "^7.0.2",
     "typescript-eslint": "^8.68.0",
-    "vitest": "^4.1.11"${(options.selectedAuth !== 'auth-null')?authDependencies.devDep: ''}
+    "vitest": "^4.1.11"${(options.selectedAuth !== 'auth-null')?expressAuthDependencies.devDep: ''}
   }
 }`
         },
@@ -293,7 +289,7 @@ firebase-admin-key.json
     file:`PORT=
 ${databases.environmentLine}
 USER_IMG=
-${(options.selectedAuth !== 'auth-null')?authDependencies.envLine: ''}
+${(options.selectedAuth !== 'auth-null')?expressAuthDependencies.envLine: ''}
 `,
 },
 {
@@ -301,7 +297,7 @@ ${(options.selectedAuth !== 'auth-null')?authDependencies.envLine: ''}
     file:`PORT=4000
 ${databases.environmentLine}
 USER_IMG=
-${(options.selectedAuth !== 'auth-null')?authDependencies.envLine: ''}
+${(options.selectedAuth !== 'auth-null')?expressAuthDependencies.envLine: ''}
 `,
 },
 {
@@ -309,7 +305,7 @@ ${(options.selectedAuth !== 'auth-null')?authDependencies.envLine: ''}
     file:`PORT=3000
 ${databases.environmentLine}
 USER_IMG=
-${(options.selectedAuth !== 'auth-null')?authDependencies.envLine: ''}
+${(options.selectedAuth !== 'auth-null')?expressAuthDependencies.envLine: ''}
 `,
 },
 {
@@ -317,7 +313,7 @@ ${(options.selectedAuth !== 'auth-null')?authDependencies.envLine: ''}
     file:`PORT=8080
 ${databases.environmentLine}
 USER_IMG=
-${(options.selectedAuth !== 'auth-null')?authDependencies.envLine: ''}
+${(options.selectedAuth !== 'auth-null')?expressAuthDependencies.envLine: ''}
 `,
 },
 {
@@ -364,7 +360,7 @@ const envConfig = {
   Port: getNumberEnv('PORT'),
   Status: NODE_ENV${databases.envConfigLine},
   UserImg: getStringEnv('USER_IMG'),
-  ${(options.selectedAuth !== 'auth-null')?authDependencies.envConfigLine: ''}
+  ${(options.selectedAuth !== 'auth-null')?expressAuthDependencies.envConfigLine: ''}
 }
 export default envConfig
   `
@@ -404,6 +400,12 @@ function nameOfDb(url:string): string {
 }
  `
 },
-
+...server
     ]
+
+if(options.selectedAuth.endsWith('-session')){
+      const serverAuth = generalBaseAuth(options)
+      serverFiles.push(...serverAuth)}
+    
+    return serverFiles
 }

@@ -1,4 +1,5 @@
 import { Colors, promptInput, promptList } from "./cliNative.js";
+import type { ProjectType } from "../types.js";
 import {
   createFunctionality,
   createWebServer,
@@ -9,15 +10,15 @@ import {
 
 export async function runCli(): Promise<void> {
   console.log("");
-  console.log(`${Colors.bold}${Colors.cyan}=============================================${Colors.reset}`);
-  console.log(`${Colors.bold}${Colors.green}          🚀 CreateBackend CLI 🚀            ${Colors.reset}`);
-  console.log(`${Colors.bold}${Colors.cyan}=============================================${Colors.reset}`);
-  console.log(`${Colors.dim}Native Node.js project and server generator${Colors.reset}\n`);
+  console.log(`${Colors.bold}${Colors.cyan}=======================================================${Colors.reset}`);
+  console.log(`${Colors.bold}${Colors.green}               🚀 CreateBackend CLI 🚀            ${Colors.reset}`);
+  console.log(`${Colors.bold}${Colors.cyan}=======================================================${Colors.reset}`);
+  console.log(`${Colors.dim}Welcome to native Node.js project and server generator${Colors.reset}\n`);
 
  
 
   // 2. Ask for the project type (equivalent to createServer.sh)
-  const projectType = await promptList< "webServer" | "nextServer" | "electronNode">(
+  const projectType = await promptList<ProjectType>(
     "What do you need to create?",
     [
       { name: "1) Web server", value: "webServer" },

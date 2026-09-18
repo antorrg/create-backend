@@ -1,11 +1,12 @@
 import type { FilePattern } from "../../types.js"
 import * as dep from './common/index.js'
-import { getErrorHandlerSnippet, getErrorHandlerTestSnippet, getErrorExportsSnippet } from "./getErrorHandlerSnippets.js"
+import { getErrorHandlerSnippets } from "./getErrorHandlerSnippets.js"
 
 export const errorsTemplate = (options: FilePattern) => {
-    const errorHandler = getErrorHandlerSnippet(options.selectedServer)
-    const errorHandlerTest = getErrorHandlerTestSnippet(options.selectedServer)
-    const errorExport = getErrorExportsSnippet(options.selectedServer)
+  const { error, errorTest, exports } = getErrorHandlerSnippets(options)
+    const errorHandler = error
+    const errorHandlerTest = errorTest
+    const errorExport = exports
 // Include statusMap in function scope
 const statusMap = {
   path: `/${options.sourceFolderName}/configs/errors/errorStatusMap.ts`,
