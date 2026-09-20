@@ -10,13 +10,16 @@ app.use(auth.setCsrfToken)
 app.use(auth.verifyCsrfToken)`
 }
 
-export const expressAuthDependencies = {
-    dep: `,
+export const authDeps = {
+     dep:`,
     "cookie-parser": "^1.4.7",
     "express-session": "^1.19.0"`,
     devDep: `,
     "@types/cookie-parser": "^1.4.10",
     "@types/express-session": "^1.19.0"`,
+}
+export const authEnvironments = {
+
     envLine:`SESSION_SECRET=`,
     envConfigLine:"SessionSecret: getStringEnv('SESSION_SECRET'),"
 }

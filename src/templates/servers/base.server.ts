@@ -1,15 +1,15 @@
 import type { FilePattern } from "../../types.js"
 import { generalBaseAuth } from "../auth/general-base.auth.js"
 import { ormDependencies } from "../baseSnippets/ormDependencies.js"
-import { getFramDependencies } from "../helpers/getFrameworsSnippets.js"
-import { expressAuthDependencies } from "./express/snippets/auth.snippets.js"
+import { getFramDependencies } from "../helpers/getFrameworkDependencies.js"
 import { frameworkInjector } from "./frameworkInjector.js"
+import { authEnvironment } from "./express/common/index.js"
 
 
 
 export const baseServer = (options:FilePattern)=>{
   const {deps, databases, initDb, tests } = ormDependencies(options)
-  const framework = getFramDependencies(options.selectedServer)
+  const {commonDep, auth} = getFramDependencies(options)
   const server = frameworkInjector(options)
     const serverFiles = [
 
@@ -17,7 +17,7 @@ export const baseServer = (options:FilePattern)=>{
 //package.json
 path: `/package.json`,
 file: `{
-  "name": "${options.projectName}",
+  "name": "${options.jsonProjectName}",
   "version": "1.0.0",
   "main": "dist/index.js",
   "type": "module",
@@ -40,15 +40,14 @@ file: `{
     "bcrypt": "^6.0.0",
     "cross-env": "^10.1.0",
     "dotenv": "^17.4.2",
-    ${framework.deps}
+    ${commonDep.dep}
     "pino": "^10.3.1",
     "pino-pretty": "^13.1.3",
-    "uuid": "^14.0.2"${(options.selectedAuth !== 'auth-null')?expressAuthDependencies.dep: ''}
+    "uuid": "^14.0.2"${auth.dep}
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@types/bcrypt": "^6.0.0",
-    ${framework.devDeps}
+    "@types/bcrypt": "^6.0.0",${commonDep.devDep}
     "@types/node": "^26.4.0",
     "@types/supertest": "^7.2.1",
     "eslint": "^10.9.1",
@@ -58,7 +57,7 @@ file: `{
     "supertest": "^7.2.2",
     "typescript": "^7.0.2",
     "typescript-eslint": "^8.68.0",
-    "vitest": "^4.1.11"${(options.selectedAuth !== 'auth-null')?expressAuthDependencies.devDep: ''}
+    "vitest": "^4.1.11"${auth.devDep}
   }
 }`
         },
@@ -289,7 +288,7 @@ firebase-admin-key.json
     file:`PORT=
 ${databases.environmentLine}
 USER_IMG=
-${(options.selectedAuth !== 'auth-null')?expressAuthDependencies.envLine: ''}
+${(options.selectedAuth !== 'auth-null')?authEnvironment.envLine: ''}
 `,
 },
 {
@@ -297,7 +296,7 @@ ${(options.selectedAuth !== 'auth-null')?expressAuthDependencies.envLine: ''}
     file:`PORT=4000
 ${databases.environmentLine}
 USER_IMG=
-${(options.selectedAuth !== 'auth-null')?expressAuthDependencies.envLine: ''}
+${(options.selectedAuth !== 'auth-null')?authEnvironment.envLine: ''}
 `,
 },
 {
@@ -305,7 +304,7 @@ ${(options.selectedAuth !== 'auth-null')?expressAuthDependencies.envLine: ''}
     file:`PORT=3000
 ${databases.environmentLine}
 USER_IMG=
-${(options.selectedAuth !== 'auth-null')?expressAuthDependencies.envLine: ''}
+${(options.selectedAuth !== 'auth-null')?authEnvironment.envLine: ''}
 `,
 },
 {
@@ -313,7 +312,7 @@ ${(options.selectedAuth !== 'auth-null')?expressAuthDependencies.envLine: ''}
     file:`PORT=8080
 ${databases.environmentLine}
 USER_IMG=
-${(options.selectedAuth !== 'auth-null')?expressAuthDependencies.envLine: ''}
+${(options.selectedAuth !== 'auth-null')?authEnvironment.envLine: ''}
 `,
 },
 {
@@ -360,7 +359,7 @@ const envConfig = {
   Port: getNumberEnv('PORT'),
   Status: NODE_ENV${databases.envConfigLine},
   UserImg: getStringEnv('USER_IMG'),
-  ${(options.selectedAuth !== 'auth-null')?expressAuthDependencies.envConfigLine: ''}
+  ${(options.selectedAuth !== 'auth-null')?authEnvironment.envConfigLine: ''}
 }
 export default envConfig
   `

@@ -18,7 +18,7 @@ export const authSessionFastify = (options: FilePattern)=>{
           file: dep.sessionTest
       },
       {
-          path:`/${options.sourceFolderName}/shared/auth/authPrehandlers.ts`,
+          path:`/${options.sourceFolderName}/shared/auth/authPreHandlers.ts`,
           file: dep.authPrehandler
       },
       {

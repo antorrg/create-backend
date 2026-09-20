@@ -1,7 +1,8 @@
-import type { ServerFramework, AppOrm } from './types.js'
+import type { ServerFramework, AppOrm, SelectedAuth } from './types.js'
 
 export type Value = {framework:ServerFramework, persistence:AppOrm}
 export type OptionServer = {name: string, value: Value}
+export type OptionAuth = {name:string, value:SelectedAuth }
 
 export const optionServer:OptionServer[] = [
       { name: "1) Express ts without db", value: {framework:"express",persistence: "none"} },
@@ -13,7 +14,7 @@ export const optionServer:OptionServer[] = [
       { name: "7) Fastiv ts with prisma (postgres)", value: {framework:"fastify",persistence:"prisma"} },
       { name: "8) Fastify ts with mongoose (mongoDb)", value: {framework:"fastify",persistence:"mongoose"} },
     ]
-    export const optionAuth = [
+    export const optionAuth: OptionAuth[] = [
       { name: "1) None", value: "auth-null" },
       { name: "2) Auth with session and cookies", value: "auth-session" },
       // { name: "3) Auth with jwt (access and refresh)", value: "auth-jwt" },

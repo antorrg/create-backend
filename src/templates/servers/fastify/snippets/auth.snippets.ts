@@ -3,7 +3,7 @@ export const fastifyAuthSnippet = {
     import:`import fastifyCookie from '@fastify/cookie'
 import fastifySession from '@fastify/session'
 import { sessionConfig } from './shared/auth/session.js'
-import { csrfProtection, setCsrfToken, verifyCsrfToken } from './shared/auth/authMiddlewares.js'
+import { csrfProtection, setCsrfToken, verifyCsrfToken } from './shared/auth/authPreHandlers.js'
 import fastifyCors from '@fastify/cors'`,
     importFeature: `import authRouter from './features/auth/auth.routes.js'`,
     line: `await fastify.register(fastifyCors, { origin: true, credentials: true })

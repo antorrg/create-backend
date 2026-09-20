@@ -51,6 +51,10 @@ async function serverBootstrap(){
 serverBootstrap()`
         },
         {
+path:`/${options.sourceFolderName}/configs/serverConfig.ts`,
+file: dep.serverConfig
+},
+        {
 path:`/${options.sourceFolderName}/features/system-logs/log.routes.ts`,
 file: dep.logRouter
 },

@@ -1,5 +1,5 @@
 import type { FilePattern } from "../../../types.js"
-import { expressaAuthSnippet , expressAuthDependencies } from "./snippets/auth.snippets.js"
+import { expressaAuthSnippet } from "./snippets/auth.snippets.js"
 import * as dep from './common/index.js'
 
 export const express = (options:FilePattern)=>{

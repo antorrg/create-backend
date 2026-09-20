@@ -1,4 +1,4 @@
-import {type  FileConstructor, type FilePattern } from "../types.js";
+import {type  FileConstructor, type FilePattern, type SelectedAuth } from "../types.js";
 import { CreatorOptions, prepareProjectDirectory, logSuccessMessage, createProjectFile } from "./common.js";
 import { Colors, promptInput, promptList, promptListObject } from "../cli/cliNative.js";
 import { optionServer, optionAuth, type Value } from "../options.js";
@@ -11,13 +11,13 @@ export async function createWebServer(options: CreatorOptions): Promise<void> {
     "Select framework and persistence",
     optionServer
   );
-  const selectedAuth = await promptList<string>(
+  const selectedAuth = await promptList<SelectedAuth>(
     "Select authentication type",
     optionAuth
   );
   console.log(`\n${Colors.cyan}🚀 Starting Web Server creation for '${options.projectName}'...${Colors.reset}`);
   console.time('constructor execution ')
-  const projectPath = await prepareProjectDirectory(options);
+
   const finalOptions = {
     ...options,
     selectedServer: serverConfig.framework,
@@ -28,10 +28,7 @@ export async function createWebServer(options: CreatorOptions): Promise<void> {
  console.log('options collection so far: ',finalOptions)
   // Specific Web Server creator functions will be invoked here
   console.log(`[creator:webServer] Running file creators for Web Server...`);
-  
-  // const serverFilesOrm = (finalOptions.selectedServer === 'prisma')
-  //         ? temp.prismaBase(finalOptions) 
-  //         : temp.sequelizeBase(finalOptions)
+
 let serverFilesOrm: FileConstructor[]| []
 
 switch (finalOptions.selectedOrm) {
@@ -58,13 +55,15 @@ switch (finalOptions.selectedOrm) {
   const serverFilesLogger = temp.loggerTs(finalOptions)
   const serverFilesErrors = temp.errorsTemplate(finalOptions)
   const serverFilesApp = temp.baseApp(finalOptions)
+  const readme = temp.readmeGenerator(finalOptions)
 
   const bases = [
-    ...serverFilesOrm,
-    ...serverFilesServer,
-    ...serverFilesLogger,
-    ...serverFilesErrors,
-    ...serverFilesApp,
+    // ...serverFilesOrm,
+    // ...serverFilesServer,
+    // ...serverFilesLogger,
+    // ...serverFilesErrors,
+    // ...serverFilesApp,
+    ...readme
   ].flat(1)
 
   // Parallelize file creation

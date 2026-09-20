@@ -6,6 +6,7 @@ import {
   createNextServer,
   createElectronNode,
   CreatorOptions,
+  NameProject,
 } from "../creators/index.js";
 
 export async function runCli(): Promise<void> {
@@ -26,18 +27,18 @@ export async function runCli(): Promise<void> {
       { name: "3) Node backend (Electron)", value: "electronNode" },
     ]
   );
-   // 1. Ask for the project name
+  // 1. Ask for the project name
   const project_name = await promptInput("Project or folder name?", {
     default: "my-server",
     validate: (input) => {
       if (!input.trim()) return "Name cannot be empty";
-      if (!/^[a-zA-Z0-9_.-]+$/.test(input.trim())) {
-        return "Name can only contain letters, numbers, hyphens, and dots";
+      if (!/^[a-zA-Z0-9 _.-]+$/.test(input.trim())) {
+        return "Name can only contain letters, numbers, spaces, hyphens, and dots";
       }
       return true;
     },
   });
-    const sourceFolderName = await promptInput("Main folder name?", {
+  const sourceFolderName = await promptInput("Main folder name?", {
     default: (projectType === 'nextServer')? "api" : "src",
     validate: (input) => {
       if (!input.trim()) return "Name cannot be empty";
@@ -51,9 +52,12 @@ export async function runCli(): Promise<void> {
   // 3. Get target directory where CLI is invoked
   const targetDir = process.cwd();
 
+  const { projectName, jsonProjectName } = validateProjectName(project_name);
+
   const options: CreatorOptions = {
     projectType,
-    projectName: normalizePackageName(project_name),
+    projectName,
+    jsonProjectName,
     sourceFolderName,
     targetDir,
   };
@@ -79,16 +83,33 @@ export async function runCli(): Promise<void> {
       break;
   }
 }
-function normalizePackageName(name:string):string {
-  return name
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .trim()
-    .toLowerCase()
-    .replace(/\s+/g, '-')
-    .replace(/[^a-z0-9-_]/g, '')
-    .replace(/^-+|-+$/g, '')
-}
-export {
 
+export function validateProjectName(inputName: string): NameProject {
+  if (typeof inputName !== "string" || !inputName.trim()) {
+    throw new Error("Project name must be a non-empty string.");
+  }
+
+  const normalized = inputName
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim();
+
+  const kebabName = normalized
+    .replace(/([a-z0-9])([A-Z])/g, "$1-$2")
+    .replace(/([A-Z])([A-Z][a-z])/g, "$1-$2")
+    .replace(/[\s_.]+/g, "-")
+    .replace(/[^a-zA-Z0-9-]/g, "")
+    .replace(/^-+|-+$/g, "")
+    .toLowerCase();
+
+  if (!kebabName) {
+    throw new Error(
+      "Invalid project name. It must contain at least one alphanumeric character."
+    );
+  }
+
+  return {
+    projectName: kebabName,
+    jsonProjectName: kebabName,
+  };
 }
