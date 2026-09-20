@@ -1,8 +1,8 @@
- import { FilePattern } from "../../../types.js"
+ import { ProjectConfig } from "../../../../types.js"
  import * as m from './sequelizeModels.js'
 
 
-export const sequelizeBaseModels = (options: FilePattern) => {
+export const sequelizeBaseModels = (options: ProjectConfig) => {
 const session ={ path:`/${options.sourceFolderName}/models/${m.sessionModel.subPath}`, file: m.sessionModel.file}
 const refresh ={ path:`/${options.sourceFolderName}/models/${m.refreshModel.subPath}`, file: m.refreshModel.file}
 const models = [{ path:`/${options.sourceFolderName}/models/${m.userModel.subPath}`, file: m.userModel.file},

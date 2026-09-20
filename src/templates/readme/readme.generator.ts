@@ -1,9 +1,7 @@
-import type { FilePattern } from '../../types.js'
+import type { ProjectConfig } from '../../types.js'
 import { baseReadme } from './templates/base.md.js'
 
-export function readmeGenerator(options: FilePattern){
- const nameServer = capitalizeFirstLetter(options.selectedServer)
- const nameOrm = capitalizeFirstLetter(options.selectedOrm)
+export function readmeGenerator(options: ProjectConfig){
 
     return [
         {

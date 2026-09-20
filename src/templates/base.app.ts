@@ -1,4 +1,4 @@
-import type { FilePattern } from "../types.js"
+import type { ProjectConfig} from "../types.js"
 import * as dep from './common/index.js'
 
 /**
@@ -16,7 +16,7 @@ import * as dep from './common/index.js'
  * userServiceTest, 
  * userService
  */
-export const baseApp = (options:FilePattern)=>{
+export const baseApp = (options:ProjectConfig)=>{
 
     return[
 

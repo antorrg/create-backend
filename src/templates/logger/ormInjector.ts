@@ -1,24 +1,15 @@
-import { loggerServiceDbPrisma } from '../prismaFns/snippets/logger.prismaSnippet.js'
-import { loggerServiceDbSequelize } from '../seqFns/snippets/seqLoggerSnippet.js'
-import type { FilePattern, AppOrm } from "../../types.js"
+import { loggerServiceDbPrisma } from '../persistence/prisma/snippets/logger.prismaSnippet.js'
+import { loggerServiceDbSequelize } from '../persistence/seqFns/snippets/seqLoggerSnippet.js'
+import type { ProjectConfig } from "../../types.js"
 
-type DbInjector = {
-  importType:string
-  file: string
+
+export const ormInjectorLog = (options: ProjectConfig) => {
+  switch(options.selectedOrm){
+    case 'sequelize': 
+     return loggerServiceDbSequelize
+    case 'prisma':
+      return loggerServiceDbPrisma
+    default:
+          throw new Error(`Orm "${options.selectedOrm}" not implemented yet`)
 }
-
-const ormInjectorHandlers: Partial<Record<AppOrm, DbInjector>> = {
-  sequelize: loggerServiceDbSequelize,
-  prisma: loggerServiceDbPrisma
-}
-
-export const ormInjectorLog = (options: FilePattern) => {
-  const handler = ormInjectorHandlers[options.selectedOrm]
-
-  if (!handler) {
-    throw new Error(
-      `Orm "${options.selectedOrm}" not implemented yet`
-    )
-  }
-  return handler
 }

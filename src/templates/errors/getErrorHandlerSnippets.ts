@@ -1,9 +1,9 @@
-import {FilePattern } from '../../types.js'
+import { ProjectConfig } from '../../types.js'
 import * as exHand from '../servers/express/snippets/expressErrorHandler.snippet.js'
 import * as fastHand from '../servers/fastify/snippets/fastifyErrorHandler.snippet.js'
 
 
-export function getErrorHandlerSnippets(options:FilePattern){
+export function getErrorHandlerSnippets(options:ProjectConfig){
    switch(options.selectedServer){
     case 'express':
       return {

@@ -1,19 +1,14 @@
-import type { FileInjector, FilePattern, ServerFramework } from "../../types.js"
+import type { ProjectConfig } from "../../types.js"
 import { expressLoggerController } from "./express/expressLoggerController.js"
 import { fastifyLoggerController } from "./fastify/fastifyLoggerController.js"
 
-const loggerFrameworkHandlers: Partial<Record<ServerFramework, FileInjector>> = {
-  express: expressLoggerController,
-  fastify: fastifyLoggerController
-}
-
-export const controllerInjectorSnippets = (options: FilePattern) => {
-  const handler = loggerFrameworkHandlers[options.selectedServer]
-
-  if (!handler) {
-    throw new Error(
-      `Framework "${options.selectedServer}" not implemented yet`
-    )
+export const controllerInjectorSnippets = (options: ProjectConfig) => {
+    switch(options.selectedServer){
+      case 'express':
+        return expressLoggerController
+      case 'fastify':
+        return fastifyLoggerController
+      default:
+            throw new Error(`Framework "${options.selectedServer}" not implemented yet`)
+    }
   }
-  return handler
-}

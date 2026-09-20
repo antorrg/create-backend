@@ -1,8 +1,8 @@
-import type { FilePattern } from "../../../types.js"
+import type { ProjectConfig } from "../../../types.js"
 import { expressaAuthSnippet } from "./snippets/auth.snippets.js"
 import * as dep from './common/index.js'
 
-export const express = (options:FilePattern)=>{
+export const express = (options:ProjectConfig)=>{
  const files =[
 
 {

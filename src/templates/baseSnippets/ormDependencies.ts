@@ -1,10 +1,10 @@
-import { FilePattern } from "../../types.js"
-import { pkgJsonSnippet } from "../prismaFns/snippets/prisDepsSnippet.js"
-import { seqDepSnippet } from '../seqFns/snippets/seqDepsSnippet.js'
+import { ProjectConfig } from "../../types.js"
+import { pkgJsonSnippet } from "../persistence/prisma/snippets/prisDepsSnippet.js"
+import { seqDepSnippet } from '../persistence/seqFns/snippets/seqDepsSnippet.js'
 import * as init from '../helpers/selectOrmForInitDb.js'
 
 
-export function ormDependencies(options: FilePattern){
+export function ormDependencies(options: ProjectConfig){
   switch(options.selectedOrm){
     case 'prisma':
       return {

@@ -1,4 +1,4 @@
-import type { FilePattern } from "../../types.js"
+import type { ProjectConfig } from "../../../types.js"
 
 const fileSession = {
   import: `import Session from './session.model.js'`,
@@ -16,7 +16,7 @@ const emptyFile = {
     line: ``
 }
 
-  export const seqAuthIndex = (options: FilePattern)=>{
+  export const seqAuthIndex = (options: ProjectConfig)=>{
   if(options.selectedAuth.endsWith('-session')){return fileSession}
   if(options.selectedAuth.endsWith('-jwt-db')){return fileRefresh}
   return emptyFile

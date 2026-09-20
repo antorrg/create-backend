@@ -1,4 +1,5 @@
-import { CreatorOptions, prepareProjectDirectory, logSuccessMessage } from "./common.js";
+import { prepareProjectDirectory, logSuccessMessage } from "./common.js";
+import type { CreatorOptions } from '../types.js'
 import { Colors } from "../cli/cliNative.js";
 
 export async function createFunctionality(options: CreatorOptions): Promise<void> {

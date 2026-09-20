@@ -1,12 +1,12 @@
-import type  {FilePattern } from '../../types.js'
+import type  { ProjectConfig } from '../../types.js'
 
-export const selectOrmForInitDb = (options:FilePattern)=>{
+export const selectOrmForInitDb = (options:ProjectConfig)=>{
     if(options.selectedOrm === 'sequelize')return 'await db.startUp(true, true)'
     if (options.selectedOrm === 'prisma')return 'await db.startUp(true)'
     return 'await db.startUp(true)'
 }
 
-export const testOrms = (options:FilePattern)=>{ 
+export const testOrms = (options:ProjectConfig)=>{ 
  const testCode = {   
   pris:`describe('Database existence', () => {
     it('should query tables and return an empty array', async () => {

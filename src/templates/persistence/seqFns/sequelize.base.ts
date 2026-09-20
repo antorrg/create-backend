@@ -1,10 +1,10 @@
-import type { FilePattern } from "../../types.js"
+import type { ProjectConfig } from "../../../types.js"
 import { seqAuthIndex } from "./sequelize.auth.index.js"
 import { sequelizeBaseModels } from './sequelizeModels/sequelize.base.models.js'
-import * as dep from './common/index.js'
+import * as dep from './files/index.js'
 
 
-export const sequelizeBase = (options:FilePattern)=>{
+export const sequelizeBase = (options:ProjectConfig)=>{
   const authIndex = seqAuthIndex(options)
   const models = sequelizeBaseModels(options)
   return[

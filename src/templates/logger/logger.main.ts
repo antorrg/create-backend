@@ -1,9 +1,9 @@
-import type { FilePattern } from "../../types.js"
-import * as dep from './common/index.js'
+import type { ProjectConfig } from "../../types.js"
+import * as dep from './files/index.js'
 import { ormInjectorLog } from "./ormInjector.js"
 import { controllerInjectorSnippets } from "./controllerInjectorSnippets.js"
 
-export const loggerTs = (options:FilePattern)=>{
+export const loggerTs = (options:ProjectConfig)=>{
   const serviceDb = ormInjectorLog(options)
   const controllerLog = controllerInjectorSnippets(options)
 

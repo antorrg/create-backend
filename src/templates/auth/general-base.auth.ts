@@ -1,8 +1,8 @@
-import type { FilePattern } from "../../types.js"
+import type { ProjectConfig } from "../../types.js"
 import { sessionFrameworkSnippet } from "./session.framework.snippet.js"
 
 
-export const generalBaseAuth = (options: FilePattern)=>{
+export const generalBaseAuth = (options: ProjectConfig)=>{
   const sessionServer = sessionFrameworkSnippet(options)
     return [
         {

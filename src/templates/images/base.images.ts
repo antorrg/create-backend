@@ -1,6 +1,6 @@
-import type { FilePattern } from "../../types.js"
+import type { ProjectConfig } from "../../types.js"
 
-export const baseImages = (options:FilePattern)=>{
+export const baseImages = (options:ProjectConfig)=>{
     return [
         {
             path:`serverAssets/fixtures/.gitkeep`,

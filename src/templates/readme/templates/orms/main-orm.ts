@@ -1,9 +1,9 @@
-import type { FilePattern } from '../../../../types.js'
+import type { ProjectConfig } from '../../../../types.js'
 import { capitalizeFirstLetter } from "../../readme.generator.js";
 import { prisma } from './prisma.md.js';
 import { sequelize } from './sequelize.md.js';
 
-export const mainOrm = (options: FilePattern): Orm => {
+export const mainOrm = (options: ProjectConfig): Orm => {
     switch(options.selectedOrm){
         case 'sequelize':
             return sequelize

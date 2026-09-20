@@ -1,10 +1,10 @@
-import type { FilePattern } from "../../../types.js"
+import type { ProjectConfig } from "../../../types.js"
 import { sessionDbSnippets } from "../sessionDbSnnipet.js"
 import { selectOrmForInitDb } from '../../helpers/selectOrmForInitDb.js'
 import * as dep from './common/index.js'
 
 
-export const authSessionFastify = (options: FilePattern)=>{
+export const authSessionFastify = (options: ProjectConfig)=>{
   const select = selectOrmForInitDb(options)
   const dbSnippet = sessionDbSnippets(options)
     return [

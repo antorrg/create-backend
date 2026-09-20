@@ -1,4 +1,4 @@
-import type { FilePattern } from "../../types.js"
+import type { ProjectConfig } from "../../types.js"
 import { generalBaseAuth } from "../auth/general-base.auth.js"
 import { ormDependencies } from "../baseSnippets/ormDependencies.js"
 import { getFramDependencies } from "../helpers/getFrameworkDependencies.js"
@@ -7,7 +7,7 @@ import { authEnvironment } from "./express/common/index.js"
 
 
 
-export const baseServer = (options:FilePattern)=>{
+export const baseServer = (options:ProjectConfig)=>{
   const {deps, databases, initDb, tests } = ormDependencies(options)
   const {commonDep, auth} = getFramDependencies(options)
   const server = frameworkInjector(options)

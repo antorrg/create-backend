@@ -1,5 +1,5 @@
-import {type  FileConstructor, type FilePattern, type SelectedAuth } from "../types.js";
-import { CreatorOptions, prepareProjectDirectory, logSuccessMessage, createProjectFile } from "./common.js";
+import {type  FileConstructor, type ProjectConfig, type SelectedAuth, type CreatorOptions } from "../types.js";
+import { prepareProjectDirectory, logSuccessMessage, createProjectFile } from "./common.js";
 import { Colors, promptInput, promptList, promptListObject } from "../cli/cliNative.js";
 import { optionServer, optionAuth, type Value } from "../options.js";
 import * as temp from '../templates/index.templates.js'
@@ -24,7 +24,7 @@ export async function createWebServer(options: CreatorOptions): Promise<void> {
     selectedOrm: serverConfig.persistence,
     selectedAuth,
     swaggerOption: false
-  } satisfies FilePattern
+  } satisfies ProjectConfig
  console.log('options collection so far: ',finalOptions)
   // Specific Web Server creator functions will be invoked here
   console.log(`[creator:webServer] Running file creators for Web Server...`);

@@ -1,15 +1,15 @@
-import type { FileConstructor, FilePattern, ServerFramework } from "../../types.js"
+import type { FileConstructor, ProjectConfig, ServerFramework } from "../../types.js"
 import {authSessionExpress} from './express/auth.session.express.js'
 import { authSessionFastify } from "./fastify/auth.session.fastify.js"
 
-type SessionFrameworkHandler = (options: FilePattern) => FileConstructor[]
+type SessionFrameworkHandler = (options: ProjectConfig) => FileConstructor[]
 
 const sessionFrameworkHandlers: Partial<Record<ServerFramework, SessionFrameworkHandler>> = {
   express: authSessionExpress,
   fastify: authSessionFastify
 }
 
-export const sessionFrameworkSnippet = (options: FilePattern) => {
+export const sessionFrameworkSnippet = (options: ProjectConfig) => {
   const handler = sessionFrameworkHandlers[options.selectedServer]
 
   if (!handler) {

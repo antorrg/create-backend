@@ -1,4 +1,4 @@
- import { FilePattern } from "../../../types.js"
+ import { ProjectConfig } from "../../../../types.js"
  
 export const userModel = {
         subPath:`user.model.ts`,

@@ -1,8 +1,8 @@
-import type { FilePattern } from "../../types.js"
-import * as dep from './common/index.js'
+import type { ProjectConfig } from "../../types.js"
+import * as dep from './files/index.js'
 import { getErrorHandlerSnippets } from "./getErrorHandlerSnippets.js"
 
-export const errorsTemplate = (options: FilePattern) => {
+export const errorsTemplate = (options: ProjectConfig) => {
   const { error, errorTest, exports } = getErrorHandlerSnippets(options)
     const errorHandler = error
     const errorHandlerTest = errorTest

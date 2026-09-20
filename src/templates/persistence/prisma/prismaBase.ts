@@ -1,10 +1,10 @@
-import type { FilePattern } from "../../types.js"
+import type { ProjectConfig } from "../../../types.js"
 import { authPrismaSnippet } from './snippets/auth.prisma.Snippet.js'
-import * as dep from './common/index.js'
+import * as dep from './files/index.js'
 
 
 
-export const prismaBase = (options:FilePattern)=>{
+export const prismaBase = (options:ProjectConfig)=>{
     return[
 {
 path: `/prisma/schema.prisma`,

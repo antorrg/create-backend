@@ -1,15 +1,15 @@
-import type { FileConstructor, FilePattern, ServerFramework } from "../../types.js"
+import type { FileConstructor, ProjectConfig, ServerFramework } from "../../types.js"
 import {express as expressCode} from './express/express.js'
 import { fastify as fastifyCode } from "./fastify/fastify.js"
 
-type FrameworkHandler = (options: FilePattern) => FileConstructor[]
+type FrameworkHandler = (options: ProjectConfig) => FileConstructor[]
 
 const serverFrameworks: Partial<Record<ServerFramework, FrameworkHandler>> = {
   express: expressCode,
   fastify: fastifyCode,
 }
 
-export const frameworkInjector = (options: FilePattern) => {
+export const frameworkInjector = (options: ProjectConfig) => {
   const handler = serverFrameworks[options.selectedServer]
 
   if (!handler) {

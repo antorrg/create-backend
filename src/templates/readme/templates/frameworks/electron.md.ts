@@ -2,13 +2,13 @@ import type { ProjectConfig } from '../../../../types.js'
 import { capitalizeFirstLetter } from "../../readme.generator.js";
 import { mainOrm } from '../orms/main-orm.js'
 
-export const expressMd = (options: ProjectConfig)=>{
+export const electronMd = (options: ProjectConfig)=>{
     const nameServer = capitalizeFirstLetter(options.selectedServer)
     const orm = mainOrm(options)
     return `
-# Api \`${options.projectName}\` (${nameServer} ${orm.part1} REST API)
+# Api \`${options.projectName}\` (${orm.part1} ELECTRON API)
 
-A scalable, production-ready RESTful API starter kit generated with CreateBackend CLI. Built with Express 5, TypeScript, Sequelize v7 (PostgreSQL), and Session-based Authentication.
+A scalable API starter kit generated with CreateBackend CLI. Build for electron apps.
 
 ## Summary
 

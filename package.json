@@ -4,7 +4,7 @@
   "main": "dist/bin.js",
   "type": "module",
   "bin": {
-    "createbackend": "./dist/bin.js"
+    "create-backend": "./dist/bin.js"
   },
   "files": [
     "dist"

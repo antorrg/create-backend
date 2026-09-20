@@ -1,8 +1,8 @@
-import type { FilePattern } from "../../../types.js"
+import type { ProjectConfig } from "../../../types.js"
 import * as dep from './common/index.js'
 import { fastifyAuthSnippet } from "./snippets/auth.snippets.js"
 
-export const fastify = (options:FilePattern)=>{
+export const fastify = (options:ProjectConfig)=>{
  const files =[
 
 {

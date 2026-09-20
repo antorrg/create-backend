@@ -1,18 +1,9 @@
 import fs from "fs/promises";
 import path from "path";
 import { Colors } from "../cli/cliNative.js";
+import type { CreatorOptions, NameProject } from "../types.js";
 
-export interface CreatorOptions {
-  projectType: string
-  jsonProjectName:string
-  projectName: string;
-  targetDir: string;
-  sourceFolderName: string
-}
-export type NameProject = {
-  projectName:string
-  jsonProjectName:string
-}
+
 /**
  * Ensures creation of the project directory at the target path
  */
