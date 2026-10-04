@@ -44,7 +44,7 @@ switch (finalOptions.selectedOrm) {
     serverFilesOrm = temp.sequelizeBase(finalOptions)
     break
 
-  case 'mongoose':
+  case 'drizzle':
     throw new Error('Mongoose not implemented yet')
   
   default:
@@ -58,11 +58,11 @@ switch (finalOptions.selectedOrm) {
   const readme = temp.readmeGenerator(finalOptions)
 
   const bases = [
-    // ...serverFilesOrm,
-    // ...serverFilesServer,
-    // ...serverFilesLogger,
-    // ...serverFilesErrors,
-    // ...serverFilesApp,
+    ...serverFilesOrm,
+    ...serverFilesServer,
+    ...serverFilesLogger,
+    ...serverFilesErrors,
+    ...serverFilesApp,
     ...readme
   ].flat(1)
 

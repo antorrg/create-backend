@@ -17,7 +17,7 @@ export type ProjectConfig = CreatorOptions & {
 }
 export type ProjectType =  "webServer" | "nextServer" | "electronNode"
 export type ServerFramework = 'express' | 'fastify'
-export type AppOrm = 'none'|'sequelize'| 'prisma'| 'mongoose'
+export type AppOrm = 'none'|'sequelize'| 'prisma'| 'drizzle'
 export type SelectedAuth = 'auth-null'| 'auth-session'
 export type FileConstructor = {
   path: string

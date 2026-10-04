@@ -81,7 +81,6 @@ api-example/
 
 \`\`\`
 
-${orm.part5}
 
 ### How to Proceed (Getting Started)
 

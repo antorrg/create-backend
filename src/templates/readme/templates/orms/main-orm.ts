@@ -19,4 +19,5 @@ export type Orm = {
     part3:string
     part4:string
     part5:string
+    part6: string
 }
