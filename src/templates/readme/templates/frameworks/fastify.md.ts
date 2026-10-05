@@ -1,9 +1,16 @@
 import type { ProjectConfig } from '../../../../types.js'
 import { capitalizeFirstLetter } from "../../readme.generator.js";
+import { fastifyStandAloneMd } from './fastifyStandAlone.md.js';
 import { mainOrm } from '../orms/main-orm.js'
 import { mainSession } from './main.session.js';
 
 export const fastifyMd = (options: ProjectConfig)=>{
+  if(options.selectedOrm === 'none'){
+    return fastifyStandAloneMd(options)}
+    return  fastifyMdDb(options)
+}
+
+const fastifyMdDb = (options: ProjectConfig)=>{
     const nameServer = capitalizeFirstLetter(options.selectedServer)
     const orm = mainOrm(options)
     const auth = mainSession(options)

@@ -1,4 +1,4 @@
-import { throwError } from '../../configs/errors.js'
+export const userService = `import { throwError } from '../../configs/errors.js'
 import type { IUser, UserCreate, UserUpdate } from './users.js'
 import type { ServiceResponse, IGenericService, TUpdate } from './user.interface.js'
 import { UuidHandler } from '../../shared/utils/UuidHandler.js'
@@ -39,7 +39,7 @@ export class UserService implements IGenericService<IUser,UserCreate, UserUpdate
    
     const response = this.Model.find(user => user.id === id)
     if (!response) {
-      throwError('User not found')
+      throwError(ERROR_CODE.NOT_FOUND, 'User not found')
     }
     return  response!
   }
@@ -48,7 +48,7 @@ export class UserService implements IGenericService<IUser,UserCreate, UserUpdate
   update(id: string, newData: TUpdate<IUser>): ServiceResponse<IUser> {
     const index = this.Model.findIndex(user => user.id === id)
     if (index === -1) {
-      throwError('This user do not exists')
+      throwError(ERROR_CODE.NOT_FOUND,'This user do not exists')
     }
 
     this.Model[index] = { ...this.Model[index], ...newData }
@@ -58,12 +58,13 @@ export class UserService implements IGenericService<IUser,UserCreate, UserUpdate
   // Eliminar un usuario por ID
   delete(id: string): ServiceResponse<IUser> {
     const index = this.Model.findIndex(user => user.id === id)
-    if (!index) {
-      throwError('User not found')
+    if (index === -1) {
+      throwError(ERROR_CODE.NOT_FOUND,'User not found')
     }
     const deleted = this.Model.splice(index, 1)[0]
-    return `User ${deleted.name} deleted successfully`
+    return \`User \${deleted.name} deleted successfully\`
   }
 }
 
 export default UserService
+`

@@ -1,4 +1,4 @@
-export interface IUser {
+export const users = `export interface IUser {
   id: string
   name: string
   username: string
@@ -89,4 +89,4 @@ export const users = [
     enabled:true,
     phone: 8987275
   }
-]
+]`

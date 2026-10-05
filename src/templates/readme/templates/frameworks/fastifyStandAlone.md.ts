@@ -1,7 +1,7 @@
 import type { ProjectConfig } from '../../../../types.js'
 import { capitalizeFirstLetter } from "../../readme.generator.js";
 
-export const expressStandAloneMd = (options: ProjectConfig)=>{
+export const fastifyStandAloneMd = (options: ProjectConfig)=>{
     const nameServer = capitalizeFirstLetter(options.selectedServer)
    
     return `
@@ -18,11 +18,10 @@ A minimal, scalable REST API starter built with **${nameServer}** and **TypeScri
 
 ## Tech Stack
 
-- **Express 5** — HTTP server & routing
+- **Fastify 5** — HTTP server & routing
 - **TypeScript** — strict mode, ESM (\`module: NodeNext\`)
-- **pnpm** — package manager
 - **Pino + Morgan** — structured & HTTP request logging
-- **req-valid-express** — request validation
+- **AJV** — request validation
 - **Vitest + Supertest** — testing
 - **ESLint (flat config)** — linting
 
@@ -34,8 +33,7 @@ A minimal, scalable REST API starter built with **${nameServer}** and **TypeScri
 ${options.projectName}/
 ├── src/
 │   ├── index.ts               # Server bootstrap (app.listen)
-│   ├── app.ts                 # Express middleware pipeline & error middleware
-│   ├── routes.ts             # Main router (/api/v1/...)
+│   ├── app.ts                 # Fastify prehandlers an errorhandlers
 │   ├── configs/               # envConfig, logger, errors/
 │   │   └── errors/            # errorCodes, errorStatusMap, errorHandlers
 │   ├── features/
@@ -137,9 +135,9 @@ This feature exists only as a **reference implementation** of the feature-module
 ## Adding a New Feature
 
 1. Create \`src/features/<name>/\` with \`<name>.routes.ts\`, \`<Name>Controller.ts\`, \`<Name>Service.ts\`, \`<name>.interface.ts\`, \`schemas.ts\`, and a data source.
-2. Validate input with \`Validator\` from \`req-valid-express\`.
+2. Validate input.
 3. Throw errors with \`throwError\` from \`configs/errors.js\`.
-4. Mount the router in \`src/routes.ts\`.
+4. Mount the router in \`src/app.ts\`.
 5. Add tests (\`*.test.ts\`) and run \`pnpm test\` + \`pnpm lint\`.
 `
 }
