@@ -1,6 +1,6 @@
 
 export const loggerInterface = `export interface ILogger {
-  id: string
+  id?: string
   levelName: LogLevel | string
   levelCode: number
   message: string

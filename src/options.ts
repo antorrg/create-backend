@@ -5,13 +5,13 @@ export type OptionServer = {name: string, value: Value}
 export type OptionAuth = {name:string, value:SelectedAuth }
 
 export const optionServer:OptionServer[] = [
-      { name: "1) Express ts without db", value: {framework:"express",persistence: "none"} },
+      { name: "1) Express ts without db (standalone)", value: {framework:"express",persistence: "none"} },
       { name: "2) Express ts with sequelize (postgres)", value: {framework:"express",persistence:"sequelize"} },
       { name: "3) Express ts with prisma (postgres)", value: {framework:"express",persistence:"prisma"} },
       { name: "4) Express ts with drizzle (postgres)", value: {framework:"express",persistence:"drizzle"} },
-      { name: "5) Fastify ts without db", value: {framework:"fastify",persistence:"none"} },
+      { name: "5) Fastify ts without db (standalone)", value: {framework:"fastify",persistence:"none"} },
       { name: "6) Fastify ts with sequelize (postgres)", value: {framework:"fastify",persistence:"sequelize"} },
-      { name: "7) Fastiv ts with prisma (postgres)", value: {framework:"fastify",persistence:"prisma"} },
+      { name: "7) Fastify ts with prisma (postgres)", value: {framework:"fastify",persistence:"prisma"} },
       { name: "8) Fastify ts with drizzle (postgres)", value: {framework:"fastify",persistence:"drizzle"} },
     ]
     export const optionAuth: OptionAuth[] = [

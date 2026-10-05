@@ -1,9 +1,16 @@
 import type { ProjectConfig } from '../../../../types.js'
 import { capitalizeFirstLetter } from "../../readme.generator.js";
+import { expressStandAloneMd } from './expressStandAlone.md.js';
 import { mainOrm } from '../orms/main-orm.js'
 import { mainSession } from './main.session.js';
 
 export const expressMd = (options: ProjectConfig)=>{
+  if(options.selectedOrm === 'none'){
+    return expressStandAloneMd(options)}
+    return  expressMdDb(options)
+}
+
+const expressMdDb = (options: ProjectConfig)=>{
     const nameServer = capitalizeFirstLetter(options.selectedServer)
     const orm = mainOrm(options)
     const auth = mainSession(options)

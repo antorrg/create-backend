@@ -16,7 +16,8 @@
   "scripts": {
     "build": "tsc",
     "start": "tsc && node dist/bin.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest run",
+    "prepublishOnly": "npm run build && npm run test"
   },
   "keywords": [],
   "author": "antorrg-software",
@@ -24,6 +25,7 @@
   "description": "",
   "devDependencies": {
     "@types/node": "^26.3.0",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.3"
   }
 }

@@ -21,9 +21,9 @@ export function middError(
 
 export function errorHandler(
   err: unknown,
-  req: Request,
+  req: Request, 
   res: Response,
-  next: NextFunction
+  next: NextFunction //eslint-disable-line
 ) {
   const e = normalizeError(err)
 
@@ -39,7 +39,8 @@ export function errorHandler(
     response.details = e.details
   }
 
-  res.status(ErrorStatus[e.code] ?? 500).json(response)
+  const statusCode = e.status ?? ErrorStatus[e.code] ?? 500
+  res.status(statusCode).json(response)
 }
 
 export const jsonFormat = (
@@ -63,6 +64,7 @@ export const jsonFormat = (
 export const notFoundRoute = (req: Request, res: Response, next: NextFunction): void => {
   next(middError('ROUTE_NOT_FOUND', 'notFoundRoute'))
 }
+  
   `
 }
 export const expressErrorHandlerTestSnippet = {

@@ -9,7 +9,7 @@ export const mainSession = (options: ProjectConfig): Auth => {
         case 'auth-session' :
             return authFunction(options)
         default:
-            throw new Error(`Orm ${options.selectedOrm} not implemented yet`)
+            throw new Error(`Auth ${options.selectedAuth} not implemented yet`)
     }
 }
 export type Auth= {

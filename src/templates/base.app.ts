@@ -18,16 +18,8 @@ import * as dep from './common/index.js'
  */
 export const baseApp = (options:ProjectConfig)=>{
 
-    return[
+    const finalApp = [
 
-{
-path:`/${options.sourceFolderName}/shared/interfaces/base.interface.ts`,
-file: dep.baseInterface
-},
-{
-  path:`/${options.sourceFolderName}/shared/dependencies.ts`,
-  file: dep.dependencies
-},
 {
   path:`/${options.sourceFolderName}/shared/utils/UuidHandler.ts`,
   file: dep.uuidHandler
@@ -36,29 +28,43 @@ file: dep.baseInterface
   path:`/${options.sourceFolderName}/shared/utils/Hasher.ts`,
   file: dep.hasher
 },
-{
-  path: `/${options.sourceFolderName}/features/user/applications/UserApplications.ts`,
-  file: dep.userApplications
-},
-{ 
-  path:`/${options.sourceFolderName}/features/user/User.interfaces.ts`,
-  file: dep.userInterface
-},
-{ 
-  path:`/${options.sourceFolderName}/features/user/User.test.ts`,
-  file: dep.userTest
-},
-{ 
-  path:`/${options.sourceFolderName}/features/user/User.ts`,
-  file: dep.user
-},
-{ 
-  path:`/${options.sourceFolderName}/features/user/UserService.test.ts`,
-  file: dep.userServiceTest
-},
-{ 
-  path:`/${options.sourceFolderName}/features/user/UserService.ts`,
-  file:dep.userService
-}
     ]
+  const applicationWithDb = [
+    {
+    path:`/${options.sourceFolderName}/shared/interfaces/base.interface.ts`,
+    file: dep.baseInterface
+    },
+    {
+      path:`/${options.sourceFolderName}/shared/dependencies.ts`,
+      file: dep.dependencies
+    },
+    {
+        path: `/${options.sourceFolderName}/features/user/applications/UserApplications.ts`,
+        file: dep.userApplications
+      },
+      { 
+        path:`/${options.sourceFolderName}/features/user/User.interfaces.ts`,
+        file: dep.userInterface
+      },
+      { 
+        path:`/${options.sourceFolderName}/features/user/User.test.ts`,
+        file: dep.userTest
+      },
+      { 
+        path:`/${options.sourceFolderName}/features/user/User.ts`,
+        file: dep.user
+      },
+      { 
+        path:`/${options.sourceFolderName}/features/user/UserService.test.ts`,
+        file: dep.userServiceTest
+      },
+      { 
+        path:`/${options.sourceFolderName}/features/user/UserService.ts`,
+        file:dep.userService
+      }
+  ]
+  if(options.selectedOrm !== 'none'){
+    applicationWithDb.map(obj => finalApp.push(obj))
+  }
+    return finalApp
 }

@@ -5,6 +5,8 @@ import type { ProjectConfig } from "../../types.js"
 
 export const ormInjectorLog = (options: ProjectConfig) => {
   switch(options.selectedOrm){
+    case 'none':
+      return loggerStandAlone
     case 'sequelize': 
      return loggerServiceDbSequelize
     case 'prisma':
@@ -13,3 +15,6 @@ export const ormInjectorLog = (options: ProjectConfig) => {
           throw new Error(`Orm "${options.selectedOrm}" not implemented yet`)
 }
 }
+const loggerStandAlone = {
+  importType:'',
+  file:'export {}'}

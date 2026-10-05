@@ -23,9 +23,8 @@ const statusMap = {
   file: `import logger from '../logger.js'
 ${errorHandler.imports}
 import { ERROR_CODE, type ErrorCode } from './errorCodes.js'
-${options.projectType === 'webServer'? `import { ErrorStatus } from './errorStatusMap.js'`: ''}
-${dep.errorHandler}
-
+${options.projectType === 'webServer'? `import { ErrorStatus, statusToErrorCode } from './errorStatusMap.js'`: ''}
+${options.projectType === 'webServer'? `${dep.serverErrorHandler}`: `${dep.errorHandler}`}
 
 ${errorHandler.handler}
 
@@ -43,8 +42,7 @@ ${errorHandlerTest.handler}
 
 {
  path: `/${options.sourceFolderName}/configs/errors.ts`,
- file: `
- ${errorExport.imports}
+ file: `${errorExport.imports}
  ${errorExport.handler}
  `
 },

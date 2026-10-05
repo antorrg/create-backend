@@ -1,4 +1,5 @@
 import { logger } from './logger.js'
+import { loggerStandAlone } from './loggerStandalone.js'
 import { fileTransport, dbTransport } from './transports.js'
 import { loggerInterface } from './serviceDb.js'
 
@@ -8,5 +9,6 @@ export {
     fileTransport,
     dbTransport,
     loggerInterface,
+    loggerStandAlone
 
 }

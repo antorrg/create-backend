@@ -7,42 +7,46 @@ export const loggerTs = (options:ProjectConfig)=>{
   const serviceDb = ormInjectorLog(options)
   const controllerLog = controllerInjectorSnippets(options)
 
-    return[
+   const results = [
 
-{
-//# Crear archivo de manejo de errores de Express
-path: `/${options.sourceFolderName}/configs/logger.ts`,
-file: dep.logger
-},
-{
+                {
+                //# Crear archivo de manejo de errores de Express
+                path: `/${options.sourceFolderName}/configs/logger.ts`,
+                file: options.selectedOrm === 'none'
+                        ? dep.loggerStandAlone
+                        : dep.logger
+                },
+                {
 
-path: `/${options.sourceFolderName}/configs/logger/transports/fileTransport.ts`,
-file: dep.fileTransport
+                path: `/${options.sourceFolderName}/configs/logger/transports/fileTransport.ts`,
+                file: dep.fileTransport
 
-},
-{
+                },
+                ]
+                const dbDependencies = [
+                {
 
-
-path: `/${options.sourceFolderName}/configs/logger/transports/dbTransport.ts`,
-file: dep.dbTransport
-
-},
-{
-
-path: `/${options.sourceFolderName}/configs/logger/Logger.interfaces.ts`,
-file: `
-import type { LogLevel } from ${serviceDb.importType}
+                path: `/${options.sourceFolderName}/configs/logger/Logger.interfaces.ts`,
+                file: `import type { LogLevel } from ${serviceDb.importType}
 ${dep.loggerInterface}
-`
-},
-{
-   path:`/${options.sourceFolderName}/configs/logger/LoggerServiceDb.ts`,
-   file:`${serviceDb.file}`
-},
-        {
-path:`/${options.sourceFolderName}/configs/logger/${controllerLog.subPath}`,
-file: `${controllerLog.file}`
-        }
+                `
+                },
+                {
+                path:`/${options.sourceFolderName}/configs/logger/LoggerServiceDb.ts`,
+                file:`${serviceDb.file}`
+                },
+                {
+                path: `/${options.sourceFolderName}/configs/logger/transports/dbTransport.ts`,
+                file: dep.dbTransport
+                },
+                                        {
+                path:`/${options.sourceFolderName}/configs/logger/${controllerLog.subPath}`,
+                file: `${controllerLog.file}`
+                        }
 ]
+if(options.selectedOrm !== 'none'){
+   dbDependencies.map(dep => results.push(dep))
+}
+return results
 }
 

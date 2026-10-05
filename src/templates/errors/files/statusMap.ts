@@ -91,4 +91,32 @@ export const ErrorStatus: Record<ErrorCode, number> = {
   [ERROR_CODE.CONFIG_INVALID]: 500,
   [ERROR_CODE.ENVIRONMENT_ERROR]: 500
 }
+
+export function statusToErrorCode(status: number): ErrorCode {
+    switch (status) {
+      case 400:
+      case 422:
+        return 'VALIDATION_ERROR'
+      case 401:
+        return 'UNAUTHORIZED'
+      case 403:
+        return 'FORBIDDEN'
+      case 404:
+        return 'NOT_FOUND'
+      case 409:
+        return 'DATA_CONFLICT'
+      case 413:
+        return 'FILE_TOO_LARGE'
+      case 415:
+        return 'FILE_TYPE_NOT_ALLOWED'
+      case 429:
+        return 'RATE_LIMIT_EXCEEDED'
+      case 501:
+        return 'NOT_IMPLEMENTED'
+      case 503:
+        return 'SERVICE_UNAVAILABLE'
+      default:
+        return status >= 400 && status < 500 ? 'INVALID_INPUT' : 'UNEXPECTED_ERROR'
+    }
+  }
   `

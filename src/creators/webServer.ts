@@ -6,15 +6,17 @@ import * as temp from '../templates/index.templates.js'
 
 
 export async function createWebServer(options: CreatorOptions): Promise<void> {
-
+  let selected ='auth-null' as SelectedAuth
   const serverConfig = await promptListObject<Value>(
     "Select framework and persistence",
     optionServer
   );
-  const selectedAuth = await promptList<SelectedAuth>(
+  if(serverConfig.persistence !== 'none'){
+  selected = await promptList<SelectedAuth>(
     "Select authentication type",
     optionAuth
   );
+  }
   console.log(`\n${Colors.cyan}🚀 Starting Web Server creation for '${options.projectName}'...${Colors.reset}`);
   console.time('constructor execution ')
 
@@ -22,10 +24,10 @@ export async function createWebServer(options: CreatorOptions): Promise<void> {
     ...options,
     selectedServer: serverConfig.framework,
     selectedOrm: serverConfig.persistence,
-    selectedAuth,
+    selectedAuth: selected,
     swaggerOption: false
   } satisfies ProjectConfig
- console.log('options collection so far: ',finalOptions)
+ //onsole.log('options collection so far: ',finalOptions)
   // Specific Web Server creator functions will be invoked here
   console.log(`[creator:webServer] Running file creators for Web Server...`);
 
@@ -45,7 +47,7 @@ switch (finalOptions.selectedOrm) {
     break
 
   case 'drizzle':
-    throw new Error('Mongoose not implemented yet')
+    throw new Error('Drizzle not implemented yet')
   
   default:
     throw new Error(`Not supportted ORM: ${finalOptions.selectedOrm}`)
@@ -72,8 +74,10 @@ switch (finalOptions.selectedOrm) {
       createProjectFile(finalOptions.projectName, server.path, server.file)
     )
   )
- 
   console.timeEnd('constructor execution ')
+  //solo para prueba:
+  //await createProjectFile(finalOptions.projectName, './options.txt', `${JSON.stringify(finalOptions)}`)
+ 
   logSuccessMessage(options.projectName, "Web Server");
   process.exit(0)
 }

@@ -1,5 +1,6 @@
 import type { ProjectConfig } from '../../../types.js'
 import {expressMd} from './frameworks/express.md.js'
+import { expressStandAloneMd } from './frameworks/expressStandAlone.md.js'
 import {fastifyMd} from './frameworks/fastify.md.js'
 import { electronMd } from './frameworks/electron.md.js'
 import { nextMd } from './frameworks/next.md.js'
@@ -16,6 +17,8 @@ export const baseReadme = (options: ProjectConfig) => {
          throw new Error(`Project ${options.projectType} not implemented yet`)
     }
 }
+
+
 
 const serverReadme = (options: ProjectConfig) => {
     switch(options.selectedServer){

@@ -48,16 +48,16 @@ file: `{
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@types/bcrypt": "^6.0.0",${commonDep.devDep}
-    "@types/node": "^26.4.0",
+    "@types/node": "^22.20.5",
     "@types/supertest": "^7.2.1",
     "eslint": "^10.9.1",
     "globals": "^17.11.0",
     ${deps.devDeps} 
     "tsx": "^4.23.12",
     "supertest": "^7.2.2",
-    "typescript": "^7.0.2",
+    "typescript": "^6.0.3",
     "typescript-eslint": "^8.68.0",
-    "vitest": "^4.1.11"${auth.devDep}
+     "vitest": "^5.0.3"${auth.devDep}
   }
 }`
         },
@@ -286,39 +286,38 @@ firebase-admin-key.json
 {
     path:`/.env.example`,
     file:`PORT=
+USER_IMG=image.png
 ${databases.environmentLine}
-USER_IMG=
 ${(options.selectedAuth !== 'auth-null')?authEnvironment.envLine: ''}
 `,
 },
 {
     path:`/.env.development`,
     file:`PORT=4000
+USER_IMG=image.png
 ${databases.environmentLine}
-USER_IMG=
 ${(options.selectedAuth !== 'auth-null')?authEnvironment.envLine: ''}
 `,
 },
 {
     path:`/.env.production`,
     file:`PORT=3000
+USER_IMG=image.png
 ${databases.environmentLine}
-USER_IMG=
 ${(options.selectedAuth !== 'auth-null')?authEnvironment.envLine: ''}
 `,
 },
 {
     path:`/.env.test`,
     file:`PORT=8080
+USER_IMG=image.png
 ${databases.environmentLine}
-USER_IMG=
 ${(options.selectedAuth !== 'auth-null')?authEnvironment.envLine: ''}
 `,
 },
 {
   path: `/vitest.config.ts`,
-  file: `
-import { defineConfig } from 'vitest/config'
+  file: `import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
   test: {
@@ -329,8 +328,7 @@ export default defineConfig({
 },
 {
   path: `/${options.sourceFolderName}/configs/envConfig.ts`,
-  file: `
-import dotenv from 'dotenv'
+  file: `import dotenv from 'dotenv'
 
 const ENV_FILE = {
   production: '.env.production',
@@ -364,7 +362,9 @@ const envConfig = {
 export default envConfig
   `
 },
-{
+...server
+    ]
+const EnvDbTest = {
    path: `/${options.sourceFolderName}/configs/EnvDb.test.ts`,
  file: `
 import { describe, it, expect, beforeAll, afterAll } from 'vitest'
@@ -398,13 +398,33 @@ function nameOfDb(url:string): string {
   return parts[parts.length - 1] || 'unknown'
 }
  `
-},
-...server
-    ]
+}
+const envTest = {
+  path: `/${options.sourceFolderName}/configs/Env.test.ts`,
+  file:`import { describe, it, expect } from 'vitest'
+import envConfig from './envConfig.js'
 
+
+describe('EnvDb test', () => { 
+
+  describe('Environment variables', () => {
+    it('should return the correct environment status and database variable', () => { 
+      const formatEnvInfo = \`App running in: \${envConfig.Status}\`+
+      \`User url image: \${envConfig.UserImg}\`
+      expect(formatEnvInfo).toBe(
+        'App running in: test'+
+        'User url image: image.png'
+      )
+    })
+  })
+})`}
+options.selectedOrm ==='none'
+  ? serverFiles.push(envTest)
+  : serverFiles.push(EnvDbTest)
 if(options.selectedAuth.endsWith('-session')){
       const serverAuth = generalBaseAuth(options)
       serverFiles.push(...serverAuth)}
     
     return serverFiles
 }
+

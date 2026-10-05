@@ -1,6 +1,7 @@
 import type { ProjectConfig } from "../../../types.js"
 import { expressaAuthSnippet } from "./snippets/auth.snippets.js"
 import * as dep from './common/index.js'
+import * as depSA from './common/standAlone/index.js'
 
 export const express = (options:ProjectConfig)=>{
  const files =[
@@ -46,16 +47,14 @@ export default app
 {
 
     path: `/${options.sourceFolderName}/routes.ts`,
-    file: `
-import express from 'express'
-import userRouter from './features/user/user.routes.js'
-import logRouter from './features/system-logs/log.routes.js'
+    file: `import express from 'express'
+import userRouter from './features/user/user.routes.js'${(options.selectedOrm === 'none')?'': `\nimport logRouter from './features/system-logs/log.routes.js'`}
 ${(options.selectedAuth !== 'auth-null')?`import authRouter from './features/auth/auth.routes.js'\n`: ''}
 const mainRouter = express.Router()
 ${(options.selectedAuth !== 'auth-null')?`\nmainRouter.use('/api/v1/auth', authRouter)\n`: ''}
 mainRouter.use('/api/v1/user', userRouter)
 
-mainRouter.use('/api/v1/logs', logRouter)
+${(options.selectedOrm === 'none')?'': `\nmainRouter.use('/api/v1/logs', logRouter)`}
 
 export default mainRouter
 `
@@ -78,14 +77,6 @@ async function serverBootstrap(){
 }
 serverBootstrap()`
         },
-        {
-path:`/${options.sourceFolderName}/features/system-logs/log.routes.ts`,
-file: dep.logRouter
-},
-{
-    path:`/${options.sourceFolderName}/features/system-logs/logSchema.ts`,
-    file: dep.logSchema
-},
 {
   path:`/${options.sourceFolderName}/shared/utils/responder.ts`,
   file: `import { type Response } from 'express'
@@ -98,19 +89,60 @@ export function responder(
   return res.status(status).json(data)
 }`
 },
-{
-    path:`/${options.sourceFolderName}/features/user/user.routes.ts`,
-    file: dep.userRouter
-},
-{
-    path:`/${options.sourceFolderName}/features/user/UserController.ts`,
-    file: dep.userController
-},
-{
-    path:`/${options.sourceFolderName}/features/user/userSchema.ts`,
-    file: dep.userSchema
-}
 
 ]
+const filesWithDb = [
+          {
+        path:`/${options.sourceFolderName}/features/system-logs/log.routes.ts`,
+        file: dep.logRouter
+        },
+        {
+            path:`/${options.sourceFolderName}/features/system-logs/logSchema.ts`,
+            file: dep.logSchema
+        },
+        {
+            path:`/${options.sourceFolderName}/features/user/user.routes.ts`,
+            file: dep.userRouter
+        },
+        {
+            path:`/${options.sourceFolderName}/features/user/UserController.ts`,
+            file: dep.userController
+        },
+        {
+            path:`/${options.sourceFolderName}/features/user/userSchema.ts`,
+            file: dep.userSchema
+        }
+      ]
+const filesStandAlone = [
+        {
+            path:`/${options.sourceFolderName}/features/user/user.routes.ts`,
+            file: depSA.userRouter
+        },
+        {
+            path:`/${options.sourceFolderName}/features/user/UserController.ts`,
+            file: depSA.userController
+        },
+        {
+            path:`/${options.sourceFolderName}/features/user/schemas.ts`,
+            file: depSA.schemas
+        },
+        {
+            path:`/${options.sourceFolderName}/features/user/user.interface.ts`,
+            file: depSA.userInterfaces
+        },
+        {
+            path:`/${options.sourceFolderName}/features/user/UserService.ts`,
+            file: depSA.userService
+        },
+        {
+            path:`/${options.sourceFolderName}/features/user/users.ts`,
+            file: depSA.users
+        }
+]
+    options.selectedOrm !== 'none'
+        ? filesWithDb.map(obj => files.push(obj))
+        : filesStandAlone.map(obj => files.push(obj))
+
+
 return files 
 }

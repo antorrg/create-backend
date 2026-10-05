@@ -21,6 +21,14 @@ export function ormDependencies(options: ProjectConfig){
         tests: init.testOrms(options)
       }
     }
+    case 'none':{
+            return {
+        deps: singleDepSnippet,
+        databases:singleLines,
+        initDb: '',
+        tests: ''
+      }
+    }
     default:
       throw new Error(`This orm ${options.selectedOrm} is not implemented yet`)
   }
@@ -34,4 +42,8 @@ envConfigLine: `,
 const singleLines = {
 environmentLine: '',
 envConfigLine: ``,
+}
+export const singleDepSnippet = {
+  deps: ``,
+  devDeps: ``
 }
