@@ -19,6 +19,8 @@ export async function createWebServer(options: CreatorOptions): Promise<void> {
   }
   console.log(`\n${Colors.cyan}🚀 Starting Web Server creation for '${options.projectName}'...${Colors.reset}`);
   console.time('constructor execution ')
+  const projectPath = await prepareProjectDirectory(options);
+
 
   const finalOptions = {
     ...options,
@@ -27,7 +29,7 @@ export async function createWebServer(options: CreatorOptions): Promise<void> {
     selectedAuth: selected,
     swaggerOption: false
   } satisfies ProjectConfig
- //onsole.log('options collection so far: ',finalOptions)
+ //console.log('options collection so far: ',finalOptions)
   // Specific Web Server creator functions will be invoked here
   console.log(`[creator:webServer] Running file creators for Web Server...`);
 
@@ -71,7 +73,7 @@ switch (finalOptions.selectedOrm) {
   // Parallelize file creation
   await Promise.all(
     bases.map(server => 
-      createProjectFile(finalOptions.projectName, server.path, server.file)
+      createProjectFile(projectPath, server.path, server.file)
     )
   )
   console.timeEnd('constructor execution ')

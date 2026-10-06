@@ -23,8 +23,8 @@ export async function runCli(): Promise<void> {
     "What do you need to create?",
     [
       { name: "1) Web server", value: "webServer" },
-      { name: "2) Next.js server", value: "nextServer" },
-      { name: "3) Node backend (Electron)", value: "electronNode" },
+      // { name: "2) Next.js server", value: "nextServer" },
+      // { name: "3) Node backend (Electron)", value: "electronNode" },
     ]
   );
   // 1. Ask for the project name

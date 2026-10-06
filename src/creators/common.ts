@@ -9,28 +9,17 @@ import type { CreatorOptions, NameProject } from "../types.js";
  */
 export async function prepareProjectDirectory(options: CreatorOptions): Promise<string> {
   const projectPath = path.resolve(options.targetDir, options.projectName);
-  //await fs.mkdir(projectPath, { recursive: true });
-  const directories = [
-  `${options.sourceFolderName}/features/user`,
-  `${options.sourceFolderName}/@types`,
-  `${options.sourceFolderName}/features/system-logs`,
-  `${options.sourceFolderName}/configs`,
-  `${options.sourceFolderName}/configs/logger`,
-  `${options.sourceFolderName}/configs/errors`,
-  `${options.sourceFolderName}/shared/repositories`,
-  `${options.sourceFolderName}/shared/interfaces`,
-  'tests'
-  // `serverAssets/fixtures`,
-  // 'serverAssets/uploads',
+  await fs.mkdir(projectPath, { recursive: true });
+  // const directories = [
   // 'tests/unit',
   // 'tests/integration'
-];
-  // Parallelize directory creation
-  await Promise.all(
-    directories.map(dir =>
-      fs.mkdir(path.join(projectPath, dir), { recursive: true })
-    )
-  );
+  //  ];
+  // // Parallelize directory creation
+  // await Promise.all(
+  //   directories.map(dir =>
+  //     fs.mkdir(path.join(projectPath, dir), { recursive: true })
+  //   )
+  // );
   console.log(`${Colors.dim}Target directory:${Colors.reset} ${projectPath}`);
   return projectPath;
 }

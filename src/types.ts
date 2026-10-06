@@ -27,34 +27,3 @@ export type FileInjector = {
   subPath: string
   file: string
 }
-/*type BaseOptions = {
-    projectName: string
-    jsonProjectName: string
-    sourceFolderName: string
-    targetDir: string
-}
-
-type WebServerOptions = CreatorOptions & {
-    projectType: 'webServer'
-    selectedServer: ServerFramework
-    selectedOrm: AppOrm
-    selectedAuth: SelectedAuth
-    swaggerOption: boolean
-}
-
-type NextServerOptions = CreatorOptions & {
-    projectType: 'nextServer'
-    selectedOrm: AppOrm
-}
-
-type ElectronNodeOptions = CreatorOptions & {
-    projectType: 'electronNode'
-    selectedOrm: AppOrm
-}
-
-export type FilePattern =
-    | WebServerOptions
-    | NextServerOptions
-    | ElectronNodeOptions
-    
-*/
