@@ -29,7 +29,6 @@ export async function createWebServer(options: CreatorOptions): Promise<void> {
     selectedAuth: selected,
     swaggerOption: false
   } satisfies ProjectConfig
- //console.log('options collection so far: ',finalOptions)
   // Specific Web Server creator functions will be invoked here
   console.log(`[creator:webServer] Running file creators for Web Server...`);
 
@@ -77,8 +76,6 @@ switch (finalOptions.selectedOrm) {
     )
   )
   console.timeEnd('constructor execution ')
-  //solo para prueba:
-  //await createProjectFile(finalOptions.projectName, './options.txt', `${JSON.stringify(finalOptions)}`)
  
   logSuccessMessage(options.projectName, "Web Server");
   process.exit(0)

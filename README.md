@@ -1,21 +1,21 @@
-# createbackend 🚀
+# create-backend
 
 > An interactive, zero-dependency native Node.js CLI tool to scaffold production-ready TypeScript backend projects, web servers, and database setups in seconds.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D20.0.0-brightgreen.svg)](https://nodejs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0%2B-blue.svg)](https://www.typescriptlang.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-6.0%2B-blue.svg)](https://www.typescriptlang.org/)
 
 ---
 
-## ⚡ Key Features
+## Key Features
 
 - **Zero Heavy CLI Dependencies**: Built with native Node.js interactive prompts for minimal setup overhead and instant startup.
 - **Framework Options**: Modern **Express 5** and **Fastify 5** with full TypeScript setup out of the box.
 - **ORM & Database Support**:
   - ✅ **Prisma v7** (PostgreSQL)
   - ✅ **Sequelize v7** (PostgreSQL)
-  - 🔄 **Standalone / No DB** *(In progress)*
+  - ✅ **Standalone / No DB**
   - 🔄 **Mongoose & Drizzle** *(Roadmap)*
 - **Authentication Scaffolding**: Session & Cookie authentication ready to use.
 - **Feature-First Architecture**: Clean, domain-driven directory structure separating features, configurations, and shared layers.
@@ -23,43 +23,43 @@
 
 ---
 
-## 📊 Supported Stack Matrix
+## Supported Stack Matrix
 
 | Framework | ORM / Persistence | Auth | Status |
 | :--- | :--- | :--- | :---: |
 | **Express 5** | **Prisma (PostgreSQL)** | Session / Cookie | ✅ **Ready** |
 | **Express 5** | **Sequelize (PostgreSQL)** | Session / Cookie | ✅ **Ready** |
 | **Fastify 5** | **Prisma (PostgreSQL)** | Session / Cookie | ✅ **Ready** |
-| **Fastify 5** | **Sequelize (PostgreSQL)** | Session / Cookie | ✅ **Ready** |
-| **Express / Fastify** | **Standalone (No DB)** | None / Session | 🔄 *In progress* |
+| **Fastify 5** | **Sequelize (PostgreSQL)** | Session / Cookie | ✅ |
+| **Express / Fastify** | **Standalone (No DB)** | None / Session | ✅ **Ready** |
 | **Next.js API Server** | Various | Various | 🔄 *Roadmap* |
 | **Electron Node Backend**| Various | Various | 🔄 *Roadmap* |
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 You don't need to install anything globally! Run the CLI using your preferred package manager:
 
 ```bash
-npx createbackend
+npx create-backend
 ```
 
 Or with `pnpm` / `yarn`:
 
 ```bash
-pnpm dlx createbackend
+pnpm dlx create-backend
 # or
-yarn create backend
+yarn create-backend
 ```
 
 ---
 
-## 🧙‍♂️ Interactive Wizard Flow
+## Interactive Wizard Flow
 
-When you execute `createbackend`, the CLI guides you through an interactive prompt:
+When you execute `create-backend`, the CLI guides you through an interactive prompt:
 
-1. **Project Type**: Select target architecture (*Web Server*, *Next.js Server*, or *Electron Node Backend*).
+1. **Project Type**: Select target architecture (*Web Server*).
 2. **Project Name**: Enter your project folder name (e.g., `my-api`).
 3. **Source Directory**: Choose primary code directory (`src`, `api`, etc.).
 4. **Framework & Database**: Pick your framework and ORM combination:
@@ -67,12 +67,12 @@ When you execute `createbackend`, the CLI guides you through an interactive prom
    - Express + Sequelize (PostgreSQL)
    - Fastify + Prisma (PostgreSQL)
    - Fastify + Sequelize (PostgreSQL)
-   - Express / Fastify (Standalone - *Coming soon*)
+   - Express / Fastify (Standalone)
 5. **Authentication**: Choose authentication setup (Session & Cookies, or None).
 
 ---
 
-## 📂 Generated Directory Structure (Feature-First Architecture)
+## Generated Directory Structure (Feature-First Architecture, prisma example)
 
 ```text
 my-api/
@@ -97,17 +97,19 @@ my-api/
 
 ---
 
-## 🛠️ Local Development & Contributing
+## Local Development & Contributing
 
-To contribute to `createbackend` or test changes locally:
+To contribute to `create-backend` or test changes locally:
 
 1. **Clone the repository**:
    ```bash
+
    git clone https://github.com/antorrg-software/create-backend.git
    cd create-backend
    ```
 
 2. **Install dependencies**:
+
    ```bash
    pnpm install
    # or
@@ -115,18 +117,20 @@ To contribute to `createbackend` or test changes locally:
    ```
 
 3. **Build the CLI**:
+
    ```bash
    npm run build
    ```
 
 4. **Run the CLI locally**:
+
    ```bash
    npm start
    ```
 
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the [MIT License](LICENSE).  
-MIT © 2026 - [antorrg-software](https://github.com/antorrg).
+MIT © 2026 - [antorrg-software](https://github.com/antorrg)

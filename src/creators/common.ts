@@ -43,5 +43,6 @@ export function logSuccessMessage(projectName: string, category: string): void {
   console.log(`\nNext steps:`);
   console.log(`  ${Colors.cyan}cd ${projectName}${Colors.reset}`);
   console.log(`  ${Colors.cyan}npm install${Colors.reset}`);
+   console.log(`  ${Colors.cyan}configure environment variables (database path)${Colors.reset}`);
   console.log(`  ${Colors.cyan}npm run dev${Colors.reset}\n`);
 }

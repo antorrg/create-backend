@@ -4,8 +4,7 @@
  */
 export const sessionImport = `import type { SessionData } from 'express-session'`
 
-export const connectSessionApp = `//import createDebug from 'debug'
-import { Store, type SessionData } from 'express-session'
+export const connectSessionApp = `import { Store, type SessionData } from 'express-session'
 import type { ISessionAdapter, SessionStoreOptions, DefaultFields } from './types.js'
 
 //const debug = createDebug('connect:session')

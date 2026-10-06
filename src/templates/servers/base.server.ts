@@ -4,6 +4,7 @@ import { ormDependencies } from "../baseSnippets/ormDependencies.js"
 import { getFramDependencies } from "../helpers/getFrameworkDependencies.js"
 import { frameworkInjector } from "./frameworkInjector.js"
 import { authEnvironment } from "./express/common/index.js"
+import * as dep from './baseServerFiles/index.js'
 
 
 
@@ -61,67 +62,6 @@ file: `{
   }
 }`
         },
-{
-  //eslint
-path: `/eslint.config.js`,
-file: `import js from '@eslint/js'
-import tseslint from 'typescript-eslint'
-import globals from 'globals'
-
-export default tseslint.config(
-  {ignores: ['dist', 'build', 'coverage', 'node_modules', 'drizzle']},
-  {
-    name: 'app.src',
-    files: ['src/**/*.ts', 'index.ts'],
-    languageOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'module',
-      globals: {
-        ...globals.node
-      }
-    },
-    extends: [ 
-      js.configs.recommended,
-      ...tseslint.configs.recommended
-    ],
-    rules:{
-      semi:['error', 'never'],
-      quotes: ['error', 'single', {avoidEscape: true}],
-      'comma-dangle': ['error', 'never'],
-      '@typescript-eslint/no-unused-vars': ['warn', {argsIgnorePattern: '^_'}],
-      '@typescript-eslint/consistent-type-imports': ['error', {prefer: 'type-imports'}],
-      '@typescript-eslint/explicit-function-return-type': 'off',
-      '@typescript-eslint/no-explicit-any': 'warn',
-      'indent': ['error', 2],
-      'space-before-function-paren': ['error', 'never'],
-      'object-curly-spacing': ['error', 'always'],
-      'array-bracket-spacing': ['error', 'never'],
-      'arrow-spacing': ['error', {before: true, after: true}]
-    }
-  },
-  {
-    name: 'app:tests',
-    files: ['test/**/*.ts', 'tests/**/*.ts', '**/*.{test,spec}.ts'],
-    languageOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'module',
-      globals: {
-        ...globals.node,
-        ...globals.vitest
-      }
-    },
-    extends: [ 
-      js.configs.recommended,
-      ...tseslint.configs.recommended
-    ],
-    rules:{
-      '@typescript-eslint/no-unused-vars': ['warn', {argsIgnorePattern: '^_'}],
-      '@typescript-eslint/no-explicit-any': 'off',
-      'no-console': 'off'
-    }
-  }
-)
-`},
 {
   //tsconfig.json
     path:`/tsconfig.json`,
@@ -197,91 +137,12 @@ export default tseslint.config(
 }`
 },
 {
+  //eslint
+path: `/eslint.config.js`,
+file: dep.eslint},
+{
     path:`/.gitignore`,
-    file:`# ---------------------------------------
-# Logs
-# ---------------------------------------
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-lerna-debug.log*
-
-# Diagnostic reports
-report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
-
-# ---------------------------------------
-# Runtime data
-# ---------------------------------------
-pids
-*.pid
-*.seed
-*.pid.lock
-
-# ---------------------------------------
-# Coverage / testing
-# ---------------------------------------
-lib-cov
-coverage
-*.lcov
-.nyc_output
-
-# ---------------------------------------
-# Dependency directories
-# ---------------------------------------
-node_modules/
-dist/
-
-# ---------------------------------------
-# Assets (uploads temporales)
-# ---------------------------------------
-servarAssets/uploads/*
-!servarAssets/uploads/.gitkeep
-data/
-
-# ---------------------------------------
-# TypeScript cache
-# ---------------------------------------
-*.tsbuildinfo
-
-# ---------------------------------------
-# npm cache (opcional)
-# ---------------------------------------
-.npm
-
-# ---------------------------------------
-# Firebase (si lo usás)
-# ---------------------------------------
-firebase-admin-key.json
-
-# ---------------------------------------
-# ESLint y Stylelint cache
-# ---------------------------------------
-.eslintcache
-.stylelintcache
-
-# ---------------------------------------
-# REPL history
-# ---------------------------------------
-.node_repl_history
-
-# ---------------------------------------
-# npm pack output
-# ---------------------------------------
-*.tgz
-
-# ---------------------------------------
-# dotenv environment variable files
-# ---------------------------------------
-.env
-.env.*
-!.env.example
-
-# ---------------------------------------
-# VSCode (opcional)
-# ---------------------------------------
-.vscode-test`
+    file:dep.gitignore
 },
 {
     path:`/.env.example`,
@@ -362,8 +223,9 @@ const envConfig = {
 export default envConfig
   `
 },
-...server
+//...server
     ]
+    server.map( s => serverFiles.push(s))
 const EnvDbTest = {
    path: `/${options.sourceFolderName}/configs/EnvDb.test.ts`,
  file: `

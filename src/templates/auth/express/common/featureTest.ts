@@ -304,7 +304,7 @@ export const integrationTest2 = ` afterAll(async() => {
 export const featureTestHelper = `import express from 'express'
 import cookieParser from 'cookie-parser'
 import * as eh from '../../../configs/errors'
-import { sessionMiddleware } from '../../../shared/auth/Session.js'
+import { sessionMiddleware } from '../../../shared/auth/session.js'
 import {
   csrfProtection,
   setCsrfToken,

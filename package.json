@@ -1,5 +1,5 @@
 {
-  "name": "createbackend",
+  "name": "create-backend",
   "version": "0.0.1",
   "main": "dist/bin.js",
   "type": "module",
@@ -19,10 +19,20 @@
     "test": "vitest run",
     "prepublishOnly": "npm run build && npm run test"
   },
-  "keywords": [],
   "author": "antorrg-software",
   "license": "MIT",
-  "description": "",
+"description": "Interactive, zero-dependency Node.js CLI to scaffold TypeScript backend projects",
+"keywords": [
+  "cli",
+  "scaffold",
+  "create-backend",
+  "express",
+  "fastify",
+  "prisma",
+  "sequelize",
+  "typescript",
+  "backend-generator"
+],
   "devDependencies": {
     "@types/node": "^26.3.0",
     "typescript": "^7.0.2",
