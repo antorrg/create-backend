@@ -12,7 +12,7 @@ import {
 export async function runCli(): Promise<void> {
   console.log("");
   console.log(`${Colors.bold}${Colors.cyan}=======================================================${Colors.reset}`);
-  console.log(`${Colors.bold}${Colors.green}               🚀 CreateBackend CLI 🚀            ${Colors.reset}`);
+  console.log(`${Colors.bold}${Colors.green}               🚀 ServersCreator CLI 🚀            ${Colors.reset}`);
   console.log(`${Colors.bold}${Colors.cyan}=======================================================${Colors.reset}`);
   console.log(`${Colors.dim}Welcome to native Node.js project and server generator${Colors.reset}\n`);
 

@@ -18,7 +18,7 @@ export async function createWebServer(options: CreatorOptions): Promise<void> {
   );
   }
   console.log(`\n${Colors.cyan}🚀 Starting Web Server creation for '${options.projectName}'...${Colors.reset}`);
-  console.time('constructor execution ')
+  //console.time('constructor execution ')
   const projectPath = await prepareProjectDirectory(options);
 
 
@@ -75,7 +75,7 @@ switch (finalOptions.selectedOrm) {
       createProjectFile(projectPath, server.path, server.file)
     )
   )
-  console.timeEnd('constructor execution ')
+  //console.timeEnd('constructor execution ')
  
   logSuccessMessage(options.projectName, "Web Server");
   process.exit(0)

@@ -1,4 +1,4 @@
-# create-backend
+# servers-creator
 
 > An interactive, zero-dependency native Node.js CLI tool to scaffold production-ready TypeScript backend projects, web servers, and database setups in seconds.
 
@@ -33,7 +33,7 @@
 | **Fastify 5** | **Sequelize (PostgreSQL)** | Session / Cookie | ✅ |
 | **Express / Fastify** | **Standalone (No DB)** | None / Session | ✅ **Ready** |
 | **Next.js API Server** | Various | Various | 🔄 *Roadmap* |
-| **Electron Node Backend**| Various | Various | 🔄 *Roadmap* |
+| **Electron Node Backend** | Various | Various | 🔄 *Roadmap* |
 
 ---
 
@@ -42,22 +42,22 @@
 You don't need to install anything globally! Run the CLI using your preferred package manager:
 
 ```bash
-npx create-backend
+npx servers-creator
 ```
 
 Or with `pnpm` / `yarn`:
 
 ```bash
-pnpm dlx create-backend
+pnpm dlx servers-creator
 # or
-yarn create-backend
+yarn servers-creator
 ```
 
 ---
 
 ## Interactive Wizard Flow
 
-When you execute `create-backend`, the CLI guides you through an interactive prompt:
+When you execute `servers-creator`, the CLI guides you through an interactive prompt:
 
 1. **Project Type**: Select target architecture (*Web Server*).
 2. **Project Name**: Enter your project folder name (e.g., `my-api`).
@@ -99,9 +99,10 @@ my-api/
 
 ## Local Development & Contributing
 
-To contribute to `create-backend` or test changes locally:
+To contribute to `servers-creator` or test changes locally:
 
 1. **Clone the repository**:
+
    ```bash
 
    git clone https://github.com/antorrg-software/create-backend.git
