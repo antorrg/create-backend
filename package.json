@@ -1,6 +1,6 @@
 {
   "name": "servers-creator",
-  "version": "0.0.1-beta.1",
+  "version": "0.0.1-beta.2",
   "description": "Interactive, zero-dependency Node.js CLI to scaffold TypeScript backend projects",
   "main": "dist/bin.js",
   "type": "module",
