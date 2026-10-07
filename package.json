@@ -1,6 +1,7 @@
 {
   "name": "servers-creator",
   "version": "0.0.1-beta.0",
+  "description": "Interactive, zero-dependency Node.js CLI to scaffold TypeScript backend projects",
   "main": "dist/bin.js",
   "type": "module",
   "bin": {
@@ -21,7 +22,6 @@
   },
   "author": "antorrg-software",
   "license": "MIT",
-"description": "Interactive, zero-dependency Node.js CLI to scaffold TypeScript backend projects",
 "keywords": [
   "cli",
   "scaffold",
