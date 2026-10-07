@@ -104,7 +104,7 @@ export function validateProjectName(inputName: string): NameProject {
 
   if (!kebabName) {
     throw new Error(
-      "Invalid project name. It must contain at least one alphanumeric character."
+      "Invalid project name. It must contain at least one alphanumeric character"
     );
   }
 

@@ -26,7 +26,7 @@ describe("validateProjectName", () => {
 
   it("should throw error if name has no alphanumeric characters", () => {
     expect(() => validateProjectName("!!!")).toThrow(
-      "Invalid project name. It must contain at least one alphanumeric character."
+      "Invalid project name. It must contain at least one alphanumeric character"
     );
   });
 });
