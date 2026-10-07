@@ -7,7 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.0.1] - 2026-10-07
+## [0.0.1-beta.1] - 2026-10-07
+
+### Changed
+
+- Fix errors in imports on standAlone templates.
+- Customize logSuccessMessage function
+
+## [0.0.1-beta.0] - 2026-10-07
 
 ### Added
 

@@ -1,7 +1,7 @@
 import fs from "fs/promises";
 import path from "path";
 import { Colors } from "../cli/cliNative.js";
-import type { CreatorOptions, NameProject } from "../types.js";
+import type { CreatorOptions, SuccessStep, NameProject } from "../types.js";
 
 
 /**
@@ -38,11 +38,15 @@ export async function createProjectFile(
   //console.log(`  ${Colors.green}+${Colors.reset} Created: ${relativePath}`);
 }
 
-export function logSuccessMessage(projectName: string, category: string): void {
+
+export function logSuccessMessage(projectName: string, category: string, nextSteps: readonly SuccessStep[]): void {
+ // const steps = nextSteps.map(n => {console.log(n)})
   console.log(`\n${Colors.green}${Colors.bold}Project '${projectName}' (${category}) created successfully!${Colors.reset}`);
   console.log(`\nNext steps:`);
-  console.log(`  ${Colors.cyan}cd ${projectName}${Colors.reset}`);
-  console.log(`  ${Colors.cyan}npm install${Colors.reset}`);
-   console.log(`  ${Colors.cyan}configure environment variables (database path)${Colors.reset}`);
-  console.log(`  ${Colors.cyan}npm run dev${Colors.reset}\n`);
+   for (const { text, color = Colors.cyan } of nextSteps) {
+    console.log(`  ${color}${text}${Colors.reset}`);
+  }
+
+  console.log();
+
 }

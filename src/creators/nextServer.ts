@@ -1,5 +1,5 @@
 import { prepareProjectDirectory, logSuccessMessage } from "./common.js";
-import type { CreatorOptions } from '../types.js'
+import type { CreatorOptions, SuccessStep } from '../types.js'
 import { Colors } from "../cli/cliNative.js";
 
 export async function createNextServer(options: CreatorOptions): Promise<void> {
@@ -12,6 +12,12 @@ export async function createNextServer(options: CreatorOptions): Promise<void> {
   
   // Example / Stub prepared to integrate specific generation
   console.log(`[creator:nextServer] TODO: Implement specific Next.js Server templates in ${projectPath}`);
+const serverSteps: SuccessStep[] = [
+  { text: `cd "${projectPath}"` },
+  { text: "npm install" }
+];
 
-  logSuccessMessage(options.projectName, "Next.js Server");
+serverSteps.push({ text: "npm run dev" });
+
+  logSuccessMessage(options.projectName, "Next.js Server", serverSteps);
 }

@@ -23,6 +23,10 @@ export type FileConstructor = {
   path: string
   file: string
 }
+export type SuccessStep = {
+  text: string;
+  color?: string;
+};
 export type FileInjector = {
   subPath: string
   file: string

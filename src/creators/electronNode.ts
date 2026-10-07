@@ -1,5 +1,5 @@
 import {  prepareProjectDirectory, logSuccessMessage } from "./common.js";
-import type { CreatorOptions } from "../types.js";
+import type { CreatorOptions, SuccessStep } from "../types.js";
 import { Colors } from "../cli/cliNative.js";
 
 export async function createElectronNode(options: CreatorOptions): Promise<void> {
@@ -12,6 +12,11 @@ export async function createElectronNode(options: CreatorOptions): Promise<void>
   
   // Example / Stub prepared to integrate specific generation
   console.log(`[creator:electronNode] TODO: Implement specific Node Backend (Electron) templates in ${projectPath}`);
+const serverSteps: SuccessStep[] = [
+  { text: `cd "${projectPath}"` },
+  { text: "npm install" }
+];
 
-  logSuccessMessage(options.projectName, "Node Backend (Electron)");
+serverSteps.push({ text: "npm run dev" });
+  logSuccessMessage(options.projectName, "Node Backend (Electron)", serverSteps);
 }

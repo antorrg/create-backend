@@ -1,4 +1,4 @@
-import {type  FileConstructor, type ProjectConfig, type SelectedAuth, type CreatorOptions } from "../types.js";
+import {type  FileConstructor, type ProjectConfig, type SelectedAuth, type CreatorOptions, type SuccessStep } from "../types.js";
 import { prepareProjectDirectory, logSuccessMessage, createProjectFile } from "./common.js";
 import { Colors, promptInput, promptList, promptListObject } from "../cli/cliNative.js";
 import { optionServer, optionAuth, type Value } from "../options.js";
@@ -76,7 +76,20 @@ switch (finalOptions.selectedOrm) {
     )
   )
   //console.timeEnd('constructor execution ')
- 
-  logSuccessMessage(options.projectName, "Web Server");
+const serverSteps: SuccessStep[] = [
+  { text: `cd "${projectPath}"` },
+  { text: "npm install" }
+];
+
+if (finalOptions.selectedOrm !== "none") {
+  serverSteps.push({
+    text: "configure environment variables for the database",
+    color: Colors.cyan
+  });
+}
+
+serverSteps.push({ text: "npm run dev" });
+
+  logSuccessMessage(options.projectName, "Web Server", serverSteps);
   process.exit(0)
 }

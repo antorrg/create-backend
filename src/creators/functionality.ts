@@ -1,5 +1,5 @@
 import { prepareProjectDirectory, logSuccessMessage } from "./common.js";
-import type { CreatorOptions } from '../types.js'
+import type { CreatorOptions, SuccessStep } from '../types.js'
 import { Colors } from "../cli/cliNative.js";
 
 export async function createFunctionality(options: CreatorOptions): Promise<void> {
@@ -12,6 +12,11 @@ export async function createFunctionality(options: CreatorOptions): Promise<void
   
   // Example / Stub prepared to integrate specific generation
   console.log(`[creator:functionality] TODO: Implement specific Functionality templates in ${projectPath}`);
+const serverSteps: SuccessStep[] = [
+  { text: `cd "${projectPath}"` },
+  { text: "npm install" }
+];
 
-  logSuccessMessage(options.projectName, "Functionality");
+serverSteps.push({ text: "npm run dev" });
+  logSuccessMessage(options.projectName, "Functionality", serverSteps);
 }
