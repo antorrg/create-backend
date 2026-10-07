@@ -1,7 +1,9 @@
 # servers-creator
 
-> An interactive, zero-dependency native Node.js CLI tool to scaffold production-ready TypeScript backend projects, web servers, and database setups in seconds.
+An interactive, zero-dependency native Node.js CLI tool to scaffold production-ready TypeScript backend projects, web servers, and database setups in seconds.
 
+[![npm version](https://img.shields.io/npm/v/req-valid-express.svg)](https://www.npmjs.com/package/req-valid-express)
+[![npm downloads](https://img.shields.io/npm/dm/req-valid-express.svg)](https://www.npmjs.com/package/req-valid-express)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D20.0.0-brightgreen.svg)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-6.0%2B-blue.svg)](https://www.typescriptlang.org/)
