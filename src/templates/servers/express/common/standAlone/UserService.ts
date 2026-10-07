@@ -1,4 +1,4 @@
-export const userService = `import { throwError } from '../../configs/errors.js'
+export const userService = `import { throwError, ERROR_CODE } from '../../configs/errors.js''
 import type { IUser, UserCreate, UserUpdate } from './users.js'
 import type { ServiceResponse, IGenericService, TUpdate } from './user.interface.js'
 import { UuidHandler } from '../../shared/utils/UuidHandler.js'
