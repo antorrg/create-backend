@@ -105,7 +105,7 @@ To contribute to `servers-creator` or test changes locally:
 
    ```bash
 
-   git clone https://github.com/antorrg-software/create-backend.git
+   git clone https://github.com/antorrg/servers-creator.git
    cd create-backend
    ```
 
