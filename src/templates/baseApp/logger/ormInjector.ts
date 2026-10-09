@@ -1,5 +1,5 @@
 import { loggerServiceDbPrisma } from '../../persistence/prisma/snippets/logger.prismaSnippet.js'
-import { loggerServiceDbSequelize } from '../../persistence/seqFns/snippets/seqLoggerSnippet.js'
+import { loggerServiceDbSequelize } from '../../persistence/sequelize/snippets/seqLoggerSnippet.js'
 import { loggerServiceDbDrizzle } from '../../persistence/drizzle/snippets/drizzleLoggerSnippet.js'
 import type { ProjectConfig } from "../../../types.js"
 

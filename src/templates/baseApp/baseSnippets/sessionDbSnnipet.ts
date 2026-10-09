@@ -1,5 +1,5 @@
 import type { ProjectConfig } from "../../../types.js"
-import {seqSessionAuthSnippetExpress} from '../../persistence/seqFns/snippets/seqSessionAuthSnippets.js'
+import {seqSessionAuthSnippetExpress} from '../../persistence/sequelize/snippets/seqSessionAuthSnippets.js'
 import { prisSessionAuthSnippetExpress } from "../../persistence/prisma/snippets/prisSessionAuthSnippets.js"
 import { drizzleessionAuthSnippetExpress } from "../../persistence/drizzle/snippets/drizzleSessionAuthSnippets.js"
 

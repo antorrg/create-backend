@@ -69,6 +69,6 @@ export interface ILoggerService<TLog, TLogUpdate> {
   getAll: (options?: IPagesOptions<TLog>) => Promise<IPaginatedResponse>
   getById: (id: string) => Promise<TLog>
   update: (id: string, data: TLogUpdate) => Promise<IActionResponse>
-  delete: (id: string) => Promise<string>
-  deleteAll: () => Promise<string>
+  delete: (id: string) => Promise<string | void>
+  deleteAll: () => Promise<string | void>
 }`

@@ -11,10 +11,10 @@ export const drizzleBase = (options:ProjectConfig)=>{
     {
         path: `/${options.sourceFolderName}/schemas/index.schemas.ts`,
         file: `import { user, enumRole } from './user.schema.js'
-import {log, type LogLevel} from './log.schema.js'
+import {log, LogLevel} from './log.schema.js'
 ${authIndex.import}
 
-export default {
+export {
     user,
     enumRole,
     log,

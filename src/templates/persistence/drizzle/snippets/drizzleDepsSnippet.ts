@@ -1,6 +1,7 @@
 export const drizzleDepSnippet = {
   deps: `"drizzle-kit": "^0.31.11",
-    "drizzle-orm": "^0.45.3",`,
+    "drizzle-orm": "^0.45.3",
+    "pg": "^8.17.2",`,
   devDeps: `"@types/pg": "^8.23.1",`
 }
 /**

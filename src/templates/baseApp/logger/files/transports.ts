@@ -44,7 +44,7 @@ export function dbWritableStream(): Writable {
           message: log.msg ?? log.message ?? '',
           type: log.err?.type ?? log.type ?? 'INFO',
           stack: log.err?.stack ?? log.stack ?? null,
-          context: log.err?.contexts ?? log.contexts ?? [],
+          contexts: log.err?.contexts ?? log.contexts ?? [],
           pid: log.pid ?? process.pid,
           time: log.time ?? Date.now(),
           hostname: log.hostname ?? 'localhost',

@@ -1,6 +1,6 @@
 import { ProjectConfig } from "../../../types.js"
 import { pkgJsonSnippet } from "../../persistence/prisma/snippets/prisDepsSnippet.js"
-import { seqDepSnippet } from '../../persistence/seqFns/snippets/seqDepsSnippet.js'
+import { seqDepSnippet } from '../../persistence/sequelize/snippets/seqDepsSnippet.js'
 import { drizzleDepSnippet } from "../../persistence/drizzle/snippets/drizzleDepsSnippet.js"
 import { testOrms } from './selectOrmForInitDb.js'
 

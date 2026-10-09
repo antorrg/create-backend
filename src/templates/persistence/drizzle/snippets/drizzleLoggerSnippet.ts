@@ -1,13 +1,13 @@
 export const loggerServiceDbDrizzle ={
-  importType:`'../../models/log.model.js'`,
+  importType:`'../../schemas/log.schema.js'`,
   file:`import { throwError, processError, ERROR_CODE } from '../errors.js'
 import { eq, ilike, desc, asc, count } from 'drizzle-orm'
 import { type ILogger, type LoggerUpdate, type LoggerCreate, type ILoggerService, type IPagesOptions, type IActionResponse, type IPaginatedResponse } from './Logger.interfaces.js'
 import { db } from '../database.js'
-import { log, type LogLevel } from '../../schemas/index.schemas.js'
+import { log } from '../../schemas/index.schemas.js'
 
 
-export class LoggerServiceDb implements ILoggerService<ILogger, LoggerUpdate> {
+class LoggerServiceDb implements ILoggerService<ILogger, LoggerUpdate> {
 
   constructor() {}
 
@@ -186,5 +186,10 @@ export class LoggerServiceDb implements ILoggerService<ILogger, LoggerUpdate> {
     }
   }
 }
-export const loggerServiceDb = new LoggerServiceDb()
-  `}
+const loggerServiceDb = new LoggerServiceDb()
+
+export {
+  LoggerServiceDb,
+  loggerServiceDb,
+  LogLevel
+}`}

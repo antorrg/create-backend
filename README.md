@@ -17,8 +17,9 @@ An interactive, zero-dependency native Node.js CLI tool to scaffold production-r
 - **ORM & Database Support**:
   - ✅ **Prisma v7** (PostgreSQL)
   - ✅ **Sequelize v7** (PostgreSQL)
+  - ✅ **Drizzle-Orm V0.45.3** (PostgreSQL)
   - ✅ **Standalone / No DB**
-  - 🔄 **Mongoose & Drizzle** *(Roadmap)*
+  - 🔄 **Mongoose** *(Roadmap)*
 - **Authentication Scaffolding**: Session & Cookie authentication ready to use.
 - **Feature-First Architecture**: Clean, domain-driven directory structure separating features, configurations, and shared layers.
 - **Production Readiness**: Pre-configured Pino logger, HTTP morgan logging, central error handling, and typed environment configuration.
@@ -31,8 +32,10 @@ An interactive, zero-dependency native Node.js CLI tool to scaffold production-r
 | :--- | :--- | :--- | :---: |
 | **Express 5** | **Prisma (PostgreSQL)** | Session / Cookie | ✅ **Ready** |
 | **Express 5** | **Sequelize (PostgreSQL)** | Session / Cookie | ✅ **Ready** |
+| **Express 5** | **Drizzle-Orm (PostgreSQL)** | Session / Cookie | ✅ **Ready** |
 | **Fastify 5** | **Prisma (PostgreSQL)** | Session / Cookie | ✅ **Ready** |
 | **Fastify 5** | **Sequelize (PostgreSQL)** | Session / Cookie | ✅ |
+| **Fastify 5** | **Drizzle-Orm (PostgreSQL)** | Session / Cookie | ✅ |
 | **Express / Fastify** | **Standalone (No DB)** | None / Session | ✅ **Ready** |
 | **Next.js API Server** | Various | Various | 🔄 *Roadmap* |
 | **Electron Node Backend** | Various | Various | 🔄 *Roadmap* |
@@ -67,8 +70,10 @@ When you execute `servers-creator`, the CLI guides you through an interactive pr
 4. **Framework & Database**: Pick your framework and ORM combination:
    - Express + Prisma (PostgreSQL)
    - Express + Sequelize (PostgreSQL)
+   - Express + Drizzle-Orm (PostgreSQL)
    - Fastify + Prisma (PostgreSQL)
    - Fastify + Sequelize (PostgreSQL)
+   - Fastify + Drizzle-Orm (PostgreSQL)
    - Express / Fastify (Standalone)
 5. **Authentication**: Choose authentication setup (Session & Cookies, or None).
 

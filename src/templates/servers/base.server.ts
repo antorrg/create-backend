@@ -1,7 +1,7 @@
 import type { ProjectConfig } from "../../types.js"
 import { generalBaseAuth } from "../auth/general-base.auth.js"
 import { ormDependencies } from "../baseApp/baseSnippets/ormDependencies.js"
-import { getFramDependencies } from "../baseApp/helpers/getFrameworkDependencies.js"
+import { getFramDependencies } from "../baseApp/baseSnippets/getFrameworkDependencies.js"
 import { frameworkInjector } from "./frameworkInjector.js"
 import { authEnvironment } from "./express/files/index.js"
 import * as dep from './baseServerFiles/index.js'
