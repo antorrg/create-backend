@@ -1,0 +1,18 @@
+
+
+path: `/prisma/schema.prisma`,
+
+path: `/prisma.config.ts`,
+
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+//************** Commons files **************//
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+path:`/${options.sourceFolderName}/configs/database.ts`,
+
+  path:`/${options.sourceFolderName}/shared/repositories/BaseRepository.ts`,
+
+  path:`/${options.sourceFolderName}/shared/repositories/BaseRepository.test.ts`,
+
+  path:`/${options.sourceFolderName}/shared/repositories/testHelpers/testHelp.help.ts`,
+
+  path: `/${options.sourceFolderName}/features/user/UserRepository.ts`,

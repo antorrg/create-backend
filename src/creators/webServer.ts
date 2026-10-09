@@ -6,9 +6,10 @@ import * as temp from '../templates/index.templates.js'
 
 
 export async function createWebServer(options: CreatorOptions): Promise<void> {
+  
   let selected ='auth-null' as SelectedAuth
   const serverConfig = await promptListObject<Value>(
-    "Select framework and persistence",
+    "Select framework and database setup",
     optionServer
   );
   if(serverConfig.persistence !== 'none'){
@@ -18,7 +19,7 @@ export async function createWebServer(options: CreatorOptions): Promise<void> {
   );
   }
   console.log(`\n${Colors.cyan}🚀 Starting Web Server creation for '${options.projectName}'...${Colors.reset}`);
-  //console.time('constructor execution ')
+  console.time('constructor execution ')
   const projectPath = await prepareProjectDirectory(options);
 
 
@@ -31,9 +32,7 @@ export async function createWebServer(options: CreatorOptions): Promise<void> {
   } satisfies ProjectConfig
   // Specific Web Server creator functions will be invoked here
   console.log(`[creator:webServer] Running file creators for Web Server...`);
-
 let serverFilesOrm: FileConstructor[]| []
-
 switch (finalOptions.selectedOrm) {
   case 'none':
     serverFilesOrm = []
@@ -48,34 +47,35 @@ switch (finalOptions.selectedOrm) {
     break
 
   case 'drizzle':
-    throw new Error('Drizzle not implemented yet')
+    serverFilesOrm = temp.drizzleBase(finalOptions)
+    break
   
   default:
     throw new Error(`Not supportted ORM: ${finalOptions.selectedOrm}`)
 }
-  
-  const serverFilesServer = temp.baseServer(finalOptions)
-  const serverFilesLogger = temp.loggerTs(finalOptions)
-  const serverFilesErrors = temp.errorsTemplate(finalOptions)
-  const serverFilesApp = temp.baseApp(finalOptions)
-  const readme = temp.readmeGenerator(finalOptions)
 
-  const bases = [
-    ...serverFilesOrm,
-    ...serverFilesServer,
-    ...serverFilesLogger,
-    ...serverFilesErrors,
-    ...serverFilesApp,
-    ...readme
-  ].flat(1)
+const serverFilesServer = temp.baseServer(finalOptions)
+const serverFilesLogger = temp.loggerTs(finalOptions)
+const serverFilesErrors = temp.errorsTemplate(finalOptions)
+const serverFilesApp = temp.baseApp(finalOptions)
+const readme = temp.readmeGenerator(finalOptions)
 
-  // Parallelize file creation
-  await Promise.all(
-    bases.map(server => 
-      createProjectFile(projectPath, server.path, server.file)
-    )
+const bases = [
+  ...serverFilesOrm,
+  ...serverFilesServer,
+  ...serverFilesLogger,
+  ...serverFilesErrors,
+  ...serverFilesApp,
+  ...readme
+].flat(1)
+
+// Parallelize file creation
+await Promise.all(
+  bases.map(server => 
+    createProjectFile(projectPath, server.path, server.file)
   )
-  //console.timeEnd('constructor execution ')
+)
+console.timeEnd('constructor execution ')
 const serverSteps: SuccessStep[] = [
   { text: `cd "${projectPath}"` },
   { text: "npm install" }
@@ -90,6 +90,7 @@ if (finalOptions.selectedOrm !== "none") {
 
 serverSteps.push({ text: "npm run dev" });
 
-  logSuccessMessage(options.projectName, "Web Server", serverSteps);
-  process.exit(0)
+logSuccessMessage(options.projectName, "Web Server", serverSteps);
+process.exit(0)
+
 }

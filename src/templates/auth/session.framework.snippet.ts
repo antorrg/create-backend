@@ -20,12 +20,3 @@ export const sessionFrameworkSnippet = (options: ProjectConfig) => {
 
   return handler(options)
 }
-
-// export const sessionFrameworkSnippet = (options:FilePattern) => {
-//     switch(options.selectedServer){
-//         case 'express':
-//             return authSessionExpress(options)
-//         default: 
-//             throw new Error('Framework not implemented yet')
-//     }
-// }

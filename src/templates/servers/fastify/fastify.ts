@@ -1,6 +1,6 @@
 import type { ProjectConfig } from "../../../types.js"
-import * as dep from './common/index.js'
-import * as depSA from './common/standAlone/index.js'
+import * as dep from './files/index.js'
+import * as depSA from './files/standAlone/index.js'
 import { fastifyAuthSnippet } from "./snippets/auth.snippets.js"
 
 export const fastify = (options:ProjectConfig)=>{

@@ -2,6 +2,7 @@ import type { ProjectConfig } from '../../../../types.js'
 import { capitalizeFirstLetter } from "../../readme.generator.js";
 import { prisma } from './prisma.md.js';
 import { sequelize } from './sequelize.md.js';
+import { drizzle } from './drizzle.md.js'
 
 export const mainOrm = (options: ProjectConfig): Orm => {
     switch(options.selectedOrm){
@@ -9,6 +10,8 @@ export const mainOrm = (options: ProjectConfig): Orm => {
             return sequelize
         case 'prisma' :
             return prisma
+        case 'drizzle' :
+            return drizzle
         default:
             throw new Error(`Orm ${options.selectedOrm} not implemented yet`)
     }

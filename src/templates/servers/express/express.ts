@@ -1,7 +1,7 @@
 import type { ProjectConfig } from "../../../types.js"
 import { expressaAuthSnippet } from "./snippets/auth.snippets.js"
-import * as dep from './common/index.js'
-import * as depSA from './common/standAlone/index.js'
+import * as dep from './files/index.js'
+import * as depSA from './files/standAlone/index.js'
 
 export const express = (options:ProjectConfig)=>{
  const files =[

@@ -1,5 +1,5 @@
 import type { ProjectConfig} from "../types.js"
-import * as dep from './common/index.js'
+import * as dep from './baseApp/files/index.js'
 
 /**
  * 

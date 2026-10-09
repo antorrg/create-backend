@@ -14,13 +14,13 @@ export async function runCli(): Promise<void> {
   console.log(`${Colors.bold}${Colors.cyan}=======================================================${Colors.reset}`);
   console.log(`${Colors.bold}${Colors.green}               🚀 ServersCreator CLI 🚀            ${Colors.reset}`);
   console.log(`${Colors.bold}${Colors.cyan}=======================================================${Colors.reset}`);
-  console.log(`${Colors.dim}Welcome to native Node.js project and server generator${Colors.reset}\n`);
+  console.log(`${Colors.dim}Welcome to native Node.js project and server generator!${Colors.reset}\n`);
 
  
 
   // 2. Ask for the project type (equivalent to createServer.sh)
   const projectType = await promptList<ProjectType>(
-    "What do you need to create?",
+    "What would you like to create?",
     [
       { name: "1) Web server", value: "webServer" },
       // { name: "2) Next.js server", value: "nextServer" },
@@ -28,7 +28,7 @@ export async function runCli(): Promise<void> {
     ]
   );
   // 1. Ask for the project name
-  const project_name = await promptInput("Project or folder name?", {
+  const project_name = await promptInput("Project name?", {
     default: "my-server",
     validate: (input) => {
       if (!input.trim()) return "Name cannot be empty";
@@ -38,7 +38,7 @@ export async function runCli(): Promise<void> {
       return true;
     },
   });
-  const sourceFolderName = await promptInput("Main folder name?", {
+  const sourceFolderName = await promptInput("Source directory?", {
     default: (projectType === 'nextServer')? "api" : "src",
     validate: (input) => {
       if (!input.trim()) return "Name cannot be empty";

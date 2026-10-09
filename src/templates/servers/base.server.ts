@@ -1,9 +1,9 @@
 import type { ProjectConfig } from "../../types.js"
 import { generalBaseAuth } from "../auth/general-base.auth.js"
-import { ormDependencies } from "../baseSnippets/ormDependencies.js"
-import { getFramDependencies } from "../helpers/getFrameworkDependencies.js"
+import { ormDependencies } from "../baseApp/baseSnippets/ormDependencies.js"
+import { getFramDependencies } from "../baseApp/helpers/getFrameworkDependencies.js"
 import { frameworkInjector } from "./frameworkInjector.js"
-import { authEnvironment } from "./express/common/index.js"
+import { authEnvironment } from "./express/files/index.js"
 import * as dep from './baseServerFiles/index.js'
 
 
@@ -81,6 +81,7 @@ file: `{
 "experimentalDecorators": true,         // NECESARIO para TypeORM y validadores
 "allowSyntheticDefaultImports": true,
 "esModuleInterop": true,
+"skipLibCheck": true,
 "forceConsistentCasingInFileNames": true,
 "strict": true,
 "strictPropertyInitialization": true

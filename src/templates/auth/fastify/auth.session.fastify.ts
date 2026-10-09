@@ -1,11 +1,11 @@
 import type { ProjectConfig } from "../../../types.js"
-import { sessionDbSnippets } from "../sessionDbSnnipet.js"
-import { selectOrmForInitDb } from '../../helpers/selectOrmForInitDb.js'
+import { sessionDbSnippets } from "../../baseApp/baseSnippets/sessionDbSnnipet.js"
+import { testOrms} from '../../baseApp/baseSnippets/selectOrmForInitDb.js'
 import * as dep from './common/index.js'
 
 
 export const authSessionFastify = (options: ProjectConfig)=>{
-  const select = selectOrmForInitDb(options)
+  const {startUp} = testOrms(options)
   const dbSnippet = sessionDbSnippets(options)
     return [
 
@@ -80,7 +80,7 @@ export interface SessionStoreOptions {
       
       describe('Auth Integration Tests', () => {
         beforeAll(async() => {
-          ${select}
+          ${startUp}
           await testUsersSeed()
         })
         ${dep.integrationTest2}
