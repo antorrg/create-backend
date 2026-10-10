@@ -9,7 +9,7 @@ import * as dep from './baseServerFiles/index.js'
 
 
 export const baseServer = (options:ProjectConfig)=>{
-  const {deps, databases, initDb, tests } = ormDependencies(options)
+  const {importTest, deps, databases, initDb, tests } = ormDependencies(options)
   const {commonDep, auth} = getFramDependencies(options)
   const server = frameworkInjector(options)
     const serverFiles = [
@@ -233,11 +233,12 @@ const EnvDbTest = {
 import { describe, it, expect, beforeAll, afterAll } from 'vitest'
 import envConfig from './envConfig.js'
 import * as db from './database.js'
+${importTest}
 
 
 describe('EnvDb test', () => { 
   beforeAll(async() => {
-  ${initDb}
+    ${initDb}
   })
   afterAll(async() => {
     await db.closeDatabase()

@@ -1,4 +1,8 @@
-// user, userApplications, userTest
+/**
+ * user
+ * userApplications
+ * userTest
+ */
 
 export const user = `import envConfig from '../../configs/envConfig.js'
 import { UuidHandler } from '../../shared/utils/UuidHandler.js'

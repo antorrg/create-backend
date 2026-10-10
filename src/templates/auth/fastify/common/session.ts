@@ -29,7 +29,7 @@ export const sessionConfig = {
 
 export const sessionTest = `import { describe, it, beforeAll, expect } from 'vitest'
 import { createTestApp } from './testHelpers/serverTest.help.js'
-import { UserRole } from './authMiddlewares.js'
+import { UserRole } from './authPreHandlers.js'
 import type { FastifyInstance } from 'fastify'
 
 describe('Session & CSRF Auth tests', () => {
@@ -169,8 +169,10 @@ export const testHelperAuth = `import Fastify from 'fastify'
 import fastifyCookie from '@fastify/cookie'
 import fastifySession from '@fastify/session'
 import { sessionConfig } from '../session.js'
-import { csrfProtection, setCsrfToken, verifyCsrfToken, isAuthenticated, authorize, UserRole, Auth, SessionUser } from '../authMiddlewares.js'
+import type { SessionUser } from '../authPreHandlers.js'
+import { csrfProtection, setCsrfToken, verifyCsrfToken, isAuthenticated, authorize, UserRole, Auth } from '../authPreHandlers.js'
 import { errorHandler } from '../../../configs/errors.js'
+
 
 export async function createTestApp() {
   const app = Fastify({ logger: false })

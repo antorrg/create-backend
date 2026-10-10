@@ -12,7 +12,6 @@ import serverAuth, {
   mockDisabled,
   getUserid
 } from './testHelpers/serverAuth.help.js'
-import { startUp, closeDatabase } from '../../configs/database.js'
 
 function getCsrfToken(res: any): string {
   const setCookie = res.get('Set-Cookie')
@@ -23,10 +22,7 @@ function getCsrfToken(res: any): string {
   return decodeURIComponent(rawToken)
 }`
 
-export const integrationTest2 = ` afterAll(async() => {
-    await closeDatabase()
-  })
-
+export const integrationTest2 = `
   describe('1. CSRF Protection Integration', () => {
     it('should generate an XSRF-TOKEN cookie on initial GET request', async() => {
       const agent = session.agent(serverAuth)

@@ -4,31 +4,20 @@
  * featureTestHelper 
  */
 export const integrationTest1 = `import { describe, it, expect, beforeAll, afterAll } from 'vitest'
-import session from 'supertest'
-import serverAuth, {
+import type { FastifyInstance } from 'fastify'
+import {
+  createAuthTestServer,
+  TestAgent,
   testUsersSeed,
   mockUser,
   mockAdmin,
   mockDisabled,
   getUserid
-} from './testHelpers/serverAuth.help.js'
-import { startUp, closeDatabase } from '../../configs/database.js'
+} from './testHelpers/serverAuth.help.js'`
 
-function getCsrfToken(res: any): string {
-  const setCookie = res.get('Set-Cookie')
-  if (!setCookie) return ''
-  const csrfCookie = setCookie.find((c: string) => c.includes('XSRF-TOKEN'))
-  if (!csrfCookie) return ''
-  const rawToken = csrfCookie.split('=')[1].split(';')[0]
-  return decodeURIComponent(rawToken)
-}`
-
-export const integrationTest2 = `afterAll(async () => {
-    await db.closeDatabase()
-  })
-
+export const integrationTest2 = `
   describe('1. CSRF Protection Integration', () => {
-    it('should generate an XSRF-TOKEN cookie on initial GET request', async () => {
+    it('should generate an XSRF-TOKEN cookie on initial GET request', async() => {
       const agent = new TestAgent(server)
       const res = await agent.get('/test/csrf')
       expect(res.status).toBe(200)
@@ -39,17 +28,17 @@ export const integrationTest2 = `afterAll(async () => {
       expect(typeof token).toBe('string')
     })
 
-    it('should reject POST /test/login if x-csrf-token header is missing', async () => {
+    it('should reject POST /test/login if x-csrf-token header is missing', async() => {
       const agent = new TestAgent(server)
       await agent.get('/test/csrf')
 
-      const res = await agent.post('/test/login', mockUser)
+      const res = await agent.post('/test/login', mockUser, { 'x-csrf-token': '' })
       expect(res.status).toBe(403)
       expect(res.body.ok).toBe(false)
       expect(res.body.code).toBe('CSRF_DETECTED')
     })
 
-    it('should reject POST /test/login if x-csrf-token header is invalid', async () => {
+    it('should reject POST /test/login if x-csrf-token header is invalid', async() => {
       const agent = new TestAgent(server)
       await agent.get('/test/csrf')
 
@@ -59,22 +48,21 @@ export const integrationTest2 = `afterAll(async () => {
       expect(res.body.code).toBe('CSRF_DETECTED')
     })
 
-    it('should accept POST /test/login when valid x-csrf-token is provided', async () => {
+    it('should accept POST /test/login when valid x-csrf-token is provided', async() => {
       const agent = new TestAgent(server)
       await agent.get('/test/csrf')
-      const token = agent.csrfToken
 
-      const res = await agent.post('/test/login', mockUser, { 'x-csrf-token': token })
+      const res = await agent.post('/test/login', mockUser)
       expect(res.status).toBe(200)
       expect(res.body.email).toBe(mockUser.email)
     })
 
-    it('should reject POST /test/login if x-csrf-token is passed via query string', async () => {
+    it('should reject POST /test/login if x-csrf-token is passed via query string', async() => {
       const agent = new TestAgent(server)
       await agent.get('/test/csrf')
       const token = agent.csrfToken
 
-      const res = await agent.post(\`/test/login?_csrf=\${token}\`, mockUser)
+      const res = await agent.post(\`/test/login?_csrf=\${token}\`, mockUser, { 'x-csrf-token': '' })
       expect(res.status).toBe(403)
       expect(res.body.ok).toBe(false)
       expect(res.body.code).toBe('CSRF_DETECTED')
@@ -82,12 +70,11 @@ export const integrationTest2 = `afterAll(async () => {
   })
 
   describe('2. Authentication Flow (/login, /me, /logout)', () => {
-    it('should login successfully with valid credentials and set session cookies', async () => {
+    it('should login successfully with valid credentials and set session cookies', async() => {
       const agent = new TestAgent(server)
       await agent.get('/test/csrf')
-      const token = agent.csrfToken
 
-      const res = await agent.post('/test/login', mockUser, { 'x-csrf-token': token })
+      const res = await agent.post('/test/login', mockUser)
       expect(res.status).toBe(200)
       expect(res.body).toEqual({
         id: getUserid(),
@@ -99,12 +86,11 @@ export const integrationTest2 = `afterAll(async () => {
       expect(agent.cookies['app.sid']).toBeDefined()
     })
 
-    it('should return session user info on GET /test/me when authenticated', async () => {
+    it('should return session user info on GET /test/me when authenticated', async() => {
       const agent = new TestAgent(server)
       await agent.get('/test/csrf')
-      const token = agent.csrfToken
 
-      await agent.post('/test/login', mockUser, { 'x-csrf-token': token })
+      await agent.post('/test/login', mockUser)
 
       const meRes = await agent.get('/test/me')
       expect(meRes.status).toBe(200)
@@ -115,7 +101,7 @@ export const integrationTest2 = `afterAll(async () => {
       })
     })
 
-    it('should deny GET /test/me when not authenticated', async () => {
+    it('should deny GET /test/me when not authenticated', async() => {
       const agent = new TestAgent(server)
       const res = await agent.get('/test/me')
       expect(res.status).toBe(403)
@@ -123,17 +109,16 @@ export const integrationTest2 = `afterAll(async () => {
       expect(res.body.code).toBe('ACCESS_DENIED')
     })
 
-    it('should logout successfully, clear cookies and destroy session', async () => {
+    it('should logout successfully, clear cookies and destroy session', async() => {
       const agent = new TestAgent(server)
       await agent.get('/test/csrf')
-      const token = agent.csrfToken
 
-      await agent.post('/test/login', mockUser, { 'x-csrf-token': token })
+      await agent.post('/test/login', mockUser)
 
       const checkBefore = await agent.get('/test/me')
       expect(checkBefore.status).toBe(200)
 
-      const logoutRes = await agent.post('/test/logout', undefined, { 'x-csrf-token': token })
+      const logoutRes = await agent.post('/test/logout')
       expect(logoutRes.status).toBe(200)
       expect(logoutRes.body).toBe('Sesión cerrada')
 
@@ -145,25 +130,24 @@ export const integrationTest2 = `afterAll(async () => {
   })
 
   describe('3. Permissions & RBAC Authorization', () => {
-    it('should allow normal USER to access isAuthenticated protected route', async () => {
+    it('should allow normal USER to access isAuthenticated protected route', async() => {
       const agent = new TestAgent(server)
       await agent.get('/test/csrf')
-      const token = agent.csrfToken
 
-      await agent.post('/test/login', mockUser, { 'x-csrf-token': token })
+      await agent.post('/test/login', mockUser)
 
       const res = await agent.get('/test/protected')
       expect(res.status).toBe(200)
       expect(res.body.ok).toBe(true)
-      expect(res.body.user.role).toBe('USER')
+      const user = res.body.user as { role: string }
+      expect(user.role).toBe('USER')
     })
 
-    it('should deny USER access to admin-only route (/test/admin-only)', async () => {
+    it('should deny USER access to admin-only route (/test/admin-only)', async() => {
       const agent = new TestAgent(server)
       await agent.get('/test/csrf')
-      const token = agent.csrfToken
 
-      await agent.post('/test/login', mockUser, { 'x-csrf-token': token })
+      await agent.post('/test/login', mockUser)
 
       const res = await agent.get('/test/admin-only')
       expect(res.status).toBe(403)
@@ -171,12 +155,11 @@ export const integrationTest2 = `afterAll(async () => {
       expect(res.body.code).toBe('FORBIDDEN')
     })
 
-    it('should deny USER access to min-admin route (/test/min-admin)', async () => {
+    it('should deny USER access to min-admin route (/test/min-admin)', async() => {
       const agent = new TestAgent(server)
       await agent.get('/test/csrf')
-      const token = agent.csrfToken
 
-      await agent.post('/test/login', mockUser, { 'x-csrf-token': token })
+      await agent.post('/test/login', mockUser)
 
       const res = await agent.get('/test/min-admin')
       expect(res.status).toBe(403)
@@ -184,12 +167,11 @@ export const integrationTest2 = `afterAll(async () => {
       expect(res.body.code).toBe('ROLE_NOT_ALLOWED')
     })
 
-    it('should allow ADMIN user to access admin-only and min-admin routes', async () => {
+    it('should allow ADMIN user to access admin-only and min-admin routes', async() => {
       const adminAgent = new TestAgent(server)
       await adminAgent.get('/test/csrf')
-      const token = adminAgent.csrfToken
 
-      const loginRes = await adminAgent.post('/test/login', mockAdmin, { 'x-csrf-token': token })
+      const loginRes = await adminAgent.post('/test/login', mockAdmin)
       expect(loginRes.status).toBe(200)
       expect(loginRes.body.role).toBe('ADMIN')
 
@@ -202,7 +184,7 @@ export const integrationTest2 = `afterAll(async () => {
       expect(minAdminRes.body.ok).toBe(true)
     })
 
-    it('should deny unauthenticated user access to protected and admin routes', async () => {
+    it('should deny unauthenticated user access to protected and admin routes', async() => {
       const unauthAgent = new TestAgent(server)
 
       const resProtected = await unauthAgent.get('/test/protected')
@@ -216,48 +198,45 @@ export const integrationTest2 = `afterAll(async () => {
   })
 
   describe('4. Corner Cases & Edge Cases', () => {
-    it('should fail login when password is incorrect with error code INVALID_CREDENTIALS', async () => {
+    it('should fail login when password is incorrect with error code INVALID_CREDENTIALS', async() => {
       const agent = new TestAgent(server)
       await agent.get('/test/csrf')
-      const token = agent.csrfToken
 
-      const res = await agent.post('/test/login', { email: mockUser.email, password: 'WrongPassword123' }, { 'x-csrf-token': token })
+      const res = await agent.post('/test/login', { email: mockUser.email, password: 'WrongPassword123' })
       expect(res.status).toBe(400)
       expect(res.body.ok).toBe(false)
       expect(res.body.code).toBe('INVALID_CREDENTIALS')
     })
 
-    it('should fail login when user email does not exist with identical INVALID_CREDENTIALS code', async () => {
+    it('should fail login when user email does not exist with identical INVALID_CREDENTIALS code', async() => {
       const agent = new TestAgent(server)
       await agent.get('/test/csrf')
-      const token = agent.csrfToken
 
-      const res = await agent.post('/test/login', { email: 'nonexistent@domain.com', password: 'L1234567' }, { 'x-csrf-token': token })
+      const res = await agent.post('/test/login', { email: 'nonexistent@domain.com', password: 'L1234567' })
       expect(res.status).toBe(400)
       expect(res.body.ok).toBe(false)
       expect(res.body.code).toBe('INVALID_CREDENTIALS')
     })
 
-    it('should fail login when user account is disabled with identical INVALID_CREDENTIALS code', async () => {
+    it('should fail login when user account is disabled with identical INVALID_CREDENTIALS code', async() => {
       const agent = new TestAgent(server)
       await agent.get('/test/csrf')
-      const token = agent.csrfToken
 
-      const res = await agent.post('/test/login', mockDisabled, { 'x-csrf-token': token })
+      const res = await agent.post('/test/login', mockDisabled)
       expect(res.status).toBe(400)
       expect(res.body.ok).toBe(false)
       expect(res.body.code).toBe('INVALID_CREDENTIALS')
     })
 
-    it('should handle session isolation between different agents', async () => {
+    it('should handle session isolation between different agents', async() => {
       const agent1 = new TestAgent(server)
       const agent2 = new TestAgent(server)
 
       await agent1.get('/test/csrf')
       await agent2.get('/test/csrf')
 
-      await agent1.post('/test/login', mockUser, { 'x-csrf-token': agent1.csrfToken })
-      await agent2.post('/test/login', mockAdmin, { 'x-csrf-token': agent2.csrfToken })
+      await agent1.post('/test/login', mockUser)
+      await agent2.post('/test/login', mockAdmin)
 
       const res1 = await agent1.get('/test/admin-only')
       expect(res1.status).toBe(403)
@@ -267,8 +246,9 @@ export const integrationTest2 = `afterAll(async () => {
     })
   })
 })
+})
 `
-export const featureTestHelper = `import Fastify from 'fastify'
+export const featureTestHelper = `import Fastify, { type FastifyInstance } from 'fastify'
 import fastifyCookie from '@fastify/cookie'
 import fastifySession from '@fastify/session'
 import { errorHandler } from '../../../configs/errors.js'
@@ -282,9 +262,77 @@ import {
   authorizeMinRole,
   UserRole,
   Auth
-} from '../../../shared/auth/authMiddlewares.js'
+} from '../../../shared/auth/authPreHandlers.js'
 import { userService } from '../../../shared/dependencies.js'
 import authRouter from '../auth.routes.js'
+
+export class TestAgent {
+  public cookies: Record<string, string> = {}
+  public csrfToken: string = ''
+
+  constructor(private app: FastifyInstance) {}
+
+  private updateCookies(resCookies?: Array<{ name: string; value: string }>) {
+    if (resCookies) {
+      for (const c of resCookies) {
+        this.cookies[c.name] = c.value
+      }
+      if (this.cookies['XSRF-TOKEN']) {
+        this.csrfToken = decodeURIComponent(this.cookies['XSRF-TOKEN'])
+      }
+    }
+  }
+
+  async get(url: string, headers?: Record<string, string>) {
+    const res = await this.app.inject({
+      method: 'GET',
+      url,
+      cookies: this.cookies,
+      headers
+    })
+    this.updateCookies(res.cookies)
+    let body: unknown = null
+    try {
+      body = res.payload ? JSON.parse(res.payload) : null
+    } catch {
+      body = res.payload
+    }
+    return {
+      status: res.statusCode,
+      body: body as Record<string, unknown>,
+      headers: res.headers
+    }
+  }
+
+  async post(url: string, body?: unknown, headers?: Record<string, string>) {
+    const requestHeaders: Record<string, string> = { ...headers }
+    if (headers && 'x-csrf-token' in headers && headers['x-csrf-token'] === '') {
+      delete requestHeaders['x-csrf-token']
+    } else if (!('x-csrf-token' in requestHeaders) && this.csrfToken) {
+      requestHeaders['x-csrf-token'] = this.csrfToken
+    }
+
+    const res = await this.app.inject({
+      method: 'POST',
+      url,
+      cookies: this.cookies,
+      headers: requestHeaders,
+      payload: body as object
+    })
+    this.updateCookies(res.cookies)
+    let parsedBody: unknown = null
+    try {
+      parsedBody = res.payload ? JSON.parse(res.payload) : null
+    } catch {
+      parsedBody = res.payload
+    }
+    return {
+      status: res.statusCode,
+      body: parsedBody as Record<string, unknown>,
+      headers: res.headers
+    }
+  }
+}
 
 export async function createAuthTestServer() {
   const server = Fastify({ logger: false })
@@ -297,21 +345,21 @@ export async function createAuthTestServer() {
   server.addHook('preHandler', setCsrfToken)
   server.addHook('preHandler', verifyCsrfToken)
 
-  server.get('/test/csrf', async (request, reply) => {
+  server.get('/test/csrf', async(request, reply) => {
     return reply.status(200).send({ ok: true, message: 'CSRF token initialized' })
   })
 
   await server.register(authRouter, { prefix: '/test' })
 
-  server.get('/test/protected', { preHandler: [isAuthenticated] }, async (request, reply) => {
+  server.get('/test/protected', { preHandler: [isAuthenticated] }, async(request, reply) => {
     return reply.status(200).send({ ok: true, message: 'Passed isAuthenticated', user: Auth.getSessionUser(request) })
   })
 
-  server.get('/test/admin-only', { preHandler: [authorize(UserRole.ADMIN)] }, async (request, reply) => {
+  server.get('/test/admin-only', { preHandler: [authorize(UserRole.ADMIN)] }, async(request, reply) => {
     return reply.status(200).send({ ok: true, message: 'Passed authorize ADMIN' })
   })
 
-  server.get('/test/min-admin', { preHandler: [authorizeMinRole(UserRole.ADMIN)] }, async (request, reply) => {
+  server.get('/test/min-admin', { preHandler: [authorizeMinRole(UserRole.ADMIN)] }, async(request, reply) => {
     return reply.status(200).send({ ok: true, message: 'Passed authorizeMinRole ADMIN' })
   })
 

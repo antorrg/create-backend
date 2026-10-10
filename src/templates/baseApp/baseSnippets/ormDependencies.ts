@@ -6,12 +6,13 @@ import { testOrms } from './selectOrmForInitDb.js'
 
 
 export function ormDependencies(options: ProjectConfig){
-  const {startUp, testCode } = testOrms(options)
+  const {importTest, startUp, testCode } = testOrms(options)
   switch(options.selectedOrm){
     case 'prisma':
       return {
         deps: pkgJsonSnippet,
         databases: postgresLines,
+        importTest,
         initDb:startUp,
         tests: testCode
       }
@@ -19,6 +20,7 @@ export function ormDependencies(options: ProjectConfig){
       return {
         deps: seqDepSnippet,
         databases: postgresLines,
+        importTest,
         initDb:startUp,
         tests: testCode
       }
@@ -27,6 +29,7 @@ export function ormDependencies(options: ProjectConfig){
             return {
         deps: drizzleDepSnippet,
         databases: postgresLines,
+        importTest,
         initDb:startUp,
         tests: testCode
       }
@@ -35,6 +38,7 @@ export function ormDependencies(options: ProjectConfig){
             return {
         deps: singleDepSnippet,
         databases:singleLines,
+        importTest: '',
         initDb: '',
         tests: ''
       }

@@ -4,6 +4,7 @@ import type  { ProjectConfig } from '../../../types.js'
 export const testOrms = (options:ProjectConfig)=>{ 
 
  const objectTest = {   
+  dbImportPrisma:'',
   prisma:`describe('Database existence', () => {
     it('should query tables and return an empty array', async () => {
         const results = await Promise.all([
@@ -17,6 +18,7 @@ export const testOrms = (options:ProjectConfig)=>{
         })
     })
   })`,
+  dbImportSequelize:'',
   sequelize: `describe('Database existence', () => {
     it('should query tables and return an empty array', async() => { 
       const models = [ 
@@ -32,32 +34,38 @@ export const testOrms = (options:ProjectConfig)=>{
     })
   })
     `,
-  drizzle: `  describe('Database existence', () => {
+  dbImportDrizzle:"import * as sch from '../schemas/index.schemas.js'",
+  drizzle: `describe('Database existence', () => {
     it('should query tables and return an empty array', async () => {
       const results = await Promise.all([
-        db.db.select().from(user),
-        db.db.select().from(log),
-        ${options.selectedAuth.endsWith('session')?'db.db.select().from(session),': ''}
+        db.db.select().from(sch.user),
+        db.db.select().from(sch.log),
+        ${options.selectedAuth.endsWith('session')?'db.db.select().from(sch.session),': ''}
       ])
       results.forEach((result) => {
         expect(Array.isArray(result)).toBe(true)
       })
     })
   })
-})
     `}
       switch(options.selectedOrm){
     case 'sequelize':
-     return {startUp: 'await db.startUp(true, true)',
-             testCode: objectTest.sequelize
+     return {
+      importTest: objectTest.dbImportSequelize,
+      startUp: 'await db.startUp(true, true)',
+      testCode: objectTest.sequelize
      }
     case 'prisma':
-      return {startUp: 'await db.startUp(true)',
-             testCode: objectTest.prisma
+      return {
+        importTest: objectTest.dbImportPrisma,
+        startUp: 'await db.startUp(true)',
+        testCode: objectTest.prisma
      }
     case 'drizzle': 
-      return {startUp: 'await db.startUp()',
-             testCode: objectTest.drizzle
+      return {
+        importTest: objectTest.dbImportDrizzle,
+        startUp: 'await db.startUp()',
+        testCode: objectTest.drizzle
      }
     default: throw new Error(`[Orm-Section]: Orm ${options.selectedOrm} not implemented yet`)
   }

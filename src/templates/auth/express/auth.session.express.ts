@@ -1,11 +1,11 @@
 import type { ProjectConfig } from "../../../types.js"
 import { sessionDbSnippets } from "../../baseApp/baseSnippets/sessionDbSnnipet.js"
-import { testOrms } from '../../baseApp/baseSnippets/selectOrmForInitDb.js'
+import { sessionOrmSnippet } from "../../persistence/session.orm.snippet.js"
 import * as dep from './common/index.js'
 
 
 export const authSessionExpress = (options: ProjectConfig)=>{
-  const {startUp} = testOrms(options)
+  const testHeader = sessionOrmSnippet(options)
   const dbSnippet = sessionDbSnippets(options)
     return [
           {
@@ -78,12 +78,7 @@ export interface SessionStoreOptions {
 {
     path:`/${options.sourceFolderName}/features/auth/auth.integration.test.ts`,
     file: `${dep.integrationTest1}
-
-describe('Auth Integration Tests', () => {
-  beforeAll(async() => {
-    ${startUp}
-    await testUsersSeed()
-  })
+  ${testHeader}
   ${dep.integrationTest2}
   `
 },
